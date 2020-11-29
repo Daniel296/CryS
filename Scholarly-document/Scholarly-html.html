@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>CRYS - Cryptocurrency Smart Manager</title>
+    <link rel="stylesheet" href="./css/scholarly.css">
+    <link rel="stylesheet" href="./css/prism-coy.css">
+    <script src="./js/prism.js.descărcare" defer=""></script>
+  </head>
+  <body prefix="schema: http://schema.org/ xsd: http://www.w3.org/2001/XMLSchema# sa: https://ns.science.ai/">
+    <header>
+      <p class="title">CRYS - cryptocurrency smart manager</p>
+      <p class="subtitle">Scholarly Html Technical Report </p>
+    </header>
+    <article id="what" typeof="schema:ScholarlyArticle" resource="#">
+      <h1>CRYS - cryptocurrency smart manager</h1>
+      <section>
+        <ol>
+          <li property="schema:author" typeof="sa:ContributorRole">
+            <a property="schema:author" href="https://github.com/Daniel296" typeof="schema:Person">
+              <span property="schema:givenName">Daniel</span>
+              <span property="schema:familyName">Oana</span>
+            </a>
+            <sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+              <a property="schema:email" href="mailto:daniel.m.oana@info.uaic.ro" title="corresponding author">✉</a>
+            </sup>
+          </li>
+          <li property="schema:author" typeof="sa:ContributorRole">
+            <a property="schema:author" href="https://github.com/madalina1" typeof="schema:Person">
+              <span property="schema:givenName">Madalina</span>
+              <span property="schema:familyName">Insuratelu</span>
+            </a>
+            <sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+              <a property="schema:email" href="mailto:madalina.r.insuratelu@info.uaic.ro" title="corresponding author">✉</a>
+            </sup>
+          </li>
+        </ol>
+        <ol>
+          <li property="schema:contributor" typeof="sa:ContributorRole">
+            <a property="schema:author" href="http://profs.info.uaic.ro/~busaco" typeof="schema:Person">
+              <span property="schema:givenName">Dr. Sabin-Corneliu</span>
+              <span property="schema:familyName">Buraga</span>
+            </a>
+            <sup property="sa:roleContactPoint" typeof="schema:ContactPoint">
+              <a property="schema:email" href="mailto:busaco@info.uaic.ro" title="corresponding author">✉</a>
+            </sup>
+          </li>
+        </ol>
+      </section>
+
+      <section typeof="sa:Abstract" id="abstract">
+	  <br>
+        <h1>Abstract</h1><hr>
+        <p>
+			Cryptocurrencies are systems that allow for the secure payments online which are denominated in terms of virtual "tokens," 
+			which are represented by ledger entries internal to the system. 
+			"Crypto" refers to the various encryption algorithms and cryptographic techniques that safeguard these entries,
+			such as elliptical curve encryption, public-private key pairs, and hashing functions.
+			<p></p>
+			When cryptocurrency is used to pay for goods or services, each transaction is securely encrypted and
+			recorded in a public ledger called a blockchain. The blockchain ensures a cryptocurrency’s integrity
+			and eliminates the need for a central administrator, such as a treasury or a central bank. Cryptocurrency
+			users connect directly to each other in peer-to-peer transactions, with a degree of anonymity provided by
+			the blockchain ledger. A cryptocurrency wallet is used to store various kinds of cryptocurrency.
+			<p></p>
+			The first decentralized cryptocurrency, bitcoin, was created in 2009 by pseudonymous developer Satoshi Nakamoto.
+			It used SHA-256, a cryptographic hash function, as its proof-of-work scheme. In April 2011,
+			Namecoin was created as an attempt at forming a decentralized DNS, which would make internet censorship very difficult.
+			Soon after, in October 2011, Litecoin was released. It was the first successful cryptocurrency to use scrypt
+			as its hash function instead of SHA-256.
+        </p>
+      </section>
+      <section typeof="sa:MaterialsAndMethods" id="motivation">
+        <h1>Our solution</h1><hr>
+        <p>
+          CryS aims to express and manage the knowledge about existing cryptocurrencies and their meta-data by showing 
+			the current value and of each altcoin, price history and the news related to the crypto-market.
+		<p></p>	
+			Our web application will have the following main functionalities:
+			<ul>
+				<li>Real time market data about cryptocurrencies</li>
+				<li>Cryptocurrency evolution history</li>
+				<li>User personalized alerts for coins of interest</li>
+				<li>Quick view of favourite user coins</li>
+				<li>Latest news regarding coins and market</li>
+			</ul>
+		</p>
+
+		<br>
+        <h1>Technologies</h1><hr>
+        <p>The technologies we'll be using in this project are :</p>
+        <p>
+          </p><ul>
+            <li>
+              Back-end
+              <ul>
+                <li><a href="https://www.oracle.com/java/index.html">Java</a> - a general-purpose computer programming language that is concurrent, class-based, object-oriented and specifically designed to have as few implementation dependencies as possible.</li>
+                <li><a href="https://spring.io/">Spring Boot</a> - makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".</li>
+                <li><a href="https://jena.apache.org/documentation/serving_data/">Apache Jena, Fuseki</a> - a free and open source Java framework for building Semantic Web
+                  and Linked Data applications. It provides the possibility to use Fuseki server in order to query the RDF data, over the HTTP.</li>
+                <li><a href="https://spring.io/projects/spring-security">Spring Security </a> - Spring Security is a powerful and highly customizable authentication and access-control framework.
+				It is the de-facto standard for securing Spring-based applications.</li>
+              </ul>
+            </li>
+            <li>
+              Front-end
+              <ul>
+				<li><a href="https://angular.io/">Angular</a> - build features quickly with simple, declarative templates.</li>
+                <li><a href="https://developer.mozilla.org/en/docs/Web/Guide/HTML/HTML5">HTML5</a> - the latest evolution of the standard that defines HTML.</li>
+                <li><a href="https://www.w3.org/Style/CSS/Overview.en.html">CSS</a> - a simple mechanism for adding style (e.g., fonts, colors, spacing) to Web documents.</li>
+                <li><a href="https://getbootstrap.com/">Bootstrap</a> - an open source toolkit for developing with HTML, CSS, and JS.</li>
+              </ul>
+            </li>
+          </ul>
+        <p></p>
+        <p>
+
+        </p><br>
+        <h1>Our proposal</h1><hr>
+        <p>
+          Our proposal is meant to offer a scalable solution of obtaining and analysing cryptocurrency in real time. Our solution will collect 
+		  data from two APIs and by transforming the data into a common format(RDF) it will be able to present to the client the information 
+		  exposed by a well documented RESTful API.
+        <p></p>
+		<br>
+          <h1>Architecture</h1><hr>
+          <p>
+            Our real time stream processing architecture
+            is typically made of the following main components:
+          </p>
+          <figure typeof="sa:Image">
+            <img src="./img/module-arhitecture.jpg" width="950" height="700">
+            <figcaption style="text-align: center">
+              Figure 1. Communication between modules
+            </figcaption>
+          </figure>
+		  <p></p>
+          <p>
+			Our system collects data from two different APIs:
+			<ul>
+				<li><a href="https://coincap.io/">Coincap</a> - a useful tool for real-time pricing and market activity for over 1,000 cryptocurrencies. 
+				By collecting exchange data from thousands of markets, we are able to offer transparent and accurate data on asset price and availability.</li>
+				<li><a href="https://cryptocontrol.io/en/developers/apis">CryptoControl</a> - allows users to use a powerful news engine with 
+				more than 5,000 articles daily from over 1000+ news sources. 
+				It uses a specialized AI to understand context of each article and attribute coins and categories to each article.</li>
+			</ul>
+		  </p>
+		  <p></p>
+		  
+		  <p>
+			After we have the relevant information about cryptocurrencies we transform it into RDF format and we query it for providing 
+			the functionalities of our application. 
+		  </p>
+		  
+		  <p>
+			We store our tweets data using Apache Jena Fuseki which is a SPARQL server. 
+			It provides REST-style SPARQL Query, and SPARQL Update using the SPARQL protocol over HTTP. 
+			We use it to store RDF triples and to retrieve information using SPARQL queries.
+		  </p>
+		  <p></p>
+		  
+		  <p>
+			The client application will be created using Angular in order to expose all functionalities of our solution.
+		  </p>
+		  <br>
+          <h1>REST api</h1><hr>
+
+          <p>
+            The UI communicates with the backend via HTTP for the live stream and REST for the information heavy operations, such as the coin meta-data view.<br>
+            Such an endpoint converts the Apache Jena format into a UI friendly format, json.
+          </p>
+
+          <p>
+            Several endoints such as this exist.<br>
+            </p><ul>
+              <li>
+                <b>/coins</b>
+                <ul>
+                  <li><b>"/"</b> - retrieve info about all coins from the system</li>
+                  <li><b>"/{id}"</b> - retrieve details about a cryptocurrency by given id</li>
+                  <li><b>"/{id}/history"</b> - retrieve details about history of cryptocurrency</li>
+                </ul>
+              </li>
+            </ul>
+          <p></p>
+
+          <p>
+            The representation of a tweet in json format does not differ much from the one in RDF as can be seen below:
+          </p>
+          <pre class=" language-json"><code class=" language-json">
+[
+	{
+	  "id": "89755268-104f-11ea-8d71-362b9e155667",
+	  "name": "Bitcoin",
+	  "rank": 1,
+	  "symbol": "BTC",
+	  "supply": 17193925,
+	  "maxSupply": 21000000,
+	  "market_cap_usd": 119179791817.67401,
+	  "volume_usd_24hr": 2928356777.6066666,
+	  "price_usd": 6931.505855566662,
+	  "change_percentage_24hr": -0.8101417214350335,
+	  "vwap_24hr": "7175.0663247679233209s"
+	},
+	{
+	  "id": "89755268-104f-11ea-8d71-362b9e155667",
+	  "name": "Ethereum",
+	  "rank": 1,
+	  "symbol": "ETH",
+	  "supply": 23582353,
+	  "maxSupply": 4232000,
+	  "market_cap_usd": 64791817.67401,
+	  "volume_usd_24hr": 4328356777.6066666,
+	  "price_usd": 431.505855566662,
+	  "change_percentage_24hr": -0.3101417214350335,
+	  "vwap_24hr": "575.0663247679233209s"
+	}
+]
+          </code></pre>
+			<br>
+            <h1>References</h1><hr>
+            <p><a href="https://cryptominded.com/">Cryptominded</a> - a curated directory of the best cryptocurrency resources.</p>
+    <footer>
+
+    </footer>
+  
+
+</section></article></body></html>
