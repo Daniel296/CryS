@@ -1,0 +1,544 @@
+swagger: '2.0'
+info:
+  description: CryS is a REST API for providing data about market activity for extisting cryptocurrencies and will offer insight into exactly which exchanges and markets contribute to pricing.
+  title: CryS REST API
+  version: v1
+  
+host: localhost:8080
+schemes:
+  - https
+basePath: /api/
+
+paths:
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: Login user with given credentials
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+        - in: formData
+          name: email
+          type: string
+          description: 'email to log in the user'
+          required: true
+          
+        - in: formData
+          name: password
+          type: string
+          description: 'password to log in the user'
+          required: true
+      responses:
+        200:
+          description: user logged in
+          schema:
+              $ref: '#/definitions/UserDetails'
+        400:
+          description: bad input parameter
+
+  /user/register:
+    post:
+      tags:
+        - user
+      summary: Register user in the system
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+        - in: formData
+          name: first_name
+          type: string
+          description: 'first name of the user'
+          required: true
+          
+        - in: formData
+          name: last_name
+          type: string
+          description: 'last name of the user'
+          required: true
+        
+        - in: formData
+          name: phone
+          type: string
+          description: 'phone number of the user'
+          required: true
+          
+        - in: formData
+          name: email
+          type: string
+          description: 'email to log in the user'
+          required: true
+          
+        - in: formData
+          name: password
+          type: string
+          description: 'password to log in the user'
+          required: true
+          
+      responses:
+        201:
+          description: user created
+          schema:
+              $ref: '#/definitions/UserDetails'
+        400:
+          description: bad input parameter
+  
+  /user/details:
+    put:
+      tags:
+        - user
+      summary: Update details for user account
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+        - in: formData
+          name: first_name
+          type: string
+          description: 'first name of the user'
+          required: true
+          
+        - in: formData
+          name: last_name
+          type: string
+          description: 'last name of the user'
+          required: true
+        
+        - in: formData
+          name: phone
+          type: string
+          description: 'phone number of the user'
+          required: true
+          
+        - in: formData
+          name: email
+          type: string
+          description: 'email to log in the user'
+          required: true
+        
+        - in: formData
+          name: email_notifications
+          type: boolean
+          description: 'set if the system sends email notifications'
+          required: true
+          
+      responses:
+        200:
+          description: user details updated
+          schema:
+              $ref: '#/definitions/UserDetails'
+        400:
+          description: bad input parameter
+  
+  /coins:
+    get:
+      tags:
+        - coin
+      summary: Get all coins from the system
+      responses:
+        200:
+          description: coins returned to the client
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Coin'
+    
+  /coins/{id}:
+    get:
+      tags:
+        - coin
+      summary: Retrieve details about a cryptocurrency
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: 'id of the coin'
+          required: true
+      responses:
+        200:
+          description: coins returned to the client
+          schema:
+              $ref: '#/definitions/Coin'
+        400:
+          description: bad input parameter
+          
+  /coins/{id}/history:
+    get:
+      tags:
+        - coin
+      summary: Retrieve details about history of cryptocurrency
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: 'id of the coin'
+          required: true
+      responses:
+        200:
+          description: history coin returned to the client
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CoinHistory'
+        400:
+          description: bad input parameter
+          
+  /coins/search/{term}:
+    get:
+      tags:
+        - coin
+      summary: Retrieve a list of coins which contain on their name the given  term
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: term
+          type: string
+          description: 'search term for coin'
+          required: true
+      responses:
+        200:
+          description: coins returned to the client
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Coin'
+  
+  /favorites/{user_id}:
+    get:
+      tags:
+        - favorites
+      summary: Get favorites cryptocurrencies for an user
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: user_id
+          type: string
+          description: 'user id for favorites coins'
+          required: true
+      responses:
+        200:
+          description: favorite coins returned to the client
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Coin'
+        401:
+          description: bad input parameter
+  
+  /favorites/add:
+    post:
+      tags:
+        - favorites
+      summary: Add a cryptocurrency to favorites for an user
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+        - in: formData
+          name: user_id
+          type: string
+          description: 'user id for favorites coins'
+          required: true
+        - in: formData
+          name: coin_id
+          type: string
+          description: 'coin id to add to favorites'
+          required: true
+      responses:
+        200:
+          description: OK
+  
+  /favorites/remove:
+    delete:
+      tags:
+        - favorites
+      summary: Remove a cryptocurrency from favorites for an user
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+        - in: formData
+          name: favorite_id
+          type: string
+          description: 'favorite coin id to remove from favorites'
+          required: true
+      responses:
+        200:
+          description: OK
+        401:
+          description: bad input parameter
+   
+  /alert/{user_id}:
+    get:
+      tags:
+        - alert
+      summary: Get all alerts of the user
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: user_id
+          type: string
+          description: 'user id for alerts'
+          required: true
+      responses:
+        200:
+          description: all alerts of the user have been retrieved
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Alert'
+        401:
+          description: bad input parameter
+          
+  /alert:
+    post:
+      tags:
+        - alert
+      summary: Create new alert
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+        - in: formData
+          name: user_id
+          type: string
+          description: 'user id for alert'
+          required: true
+        - in: formData
+          name: coin_id
+          type: string
+          description: 'coin id for alert'
+          required: true
+        - in: formData
+          name: alert_value
+          type: integer
+          description: 'alert value'
+          required: true
+        
+      responses:
+        201:
+          description: alert created
+        401:
+          description: bad input parameter
+          
+  /alert/remove:
+    delete:
+      tags:
+        - alert
+      summary: Remove an alert
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+        - in: formData
+          name: alert_id
+          type: string
+          description: 'alert id to remove from database'
+          required: true
+      responses:
+        200:
+          description: OK
+        401:
+          description: bad input parameter
+  
+  /alert/update:
+    put:
+      tags:
+        - alert
+      summary: Update alert value
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+        - in: formData
+          name: alert_id
+          type: string
+          description: 'alert id to remove from database'
+          required: true
+        - in: formData
+          name: new_alert_value
+          type: string
+          description: 'new alert value'
+          required: true
+      responses:
+        200:
+          description: OK
+        401:
+          description: bad input parameters
+  
+  /news:
+    get:
+      tags:
+        - news
+      summary: Get latest news about cryptocurrencies
+      responses:
+        200:
+          description: news returned to the client
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/News'
+  
+  /news/{id}:
+    get:
+      tags:
+        - news
+      summary: get news by id
+      produces:
+      - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: 'news id'
+          required: true
+      responses:
+        200:
+          description: news returned to the client
+          schema:
+              $ref: '#/definitions/News'
+  
+definitions:
+  UserDetails:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: 89755268-104f-11ea-8d71-362b9e155667
+      first_name:
+        type: string
+        example: Daniel
+      last_name:
+        type: string
+        example: Oana
+      email:
+        type: string
+        example: daniel.oana26@gmail.com
+      phone:
+        type: string
+        example: 0756784385
+      email_notifications:
+        type: boolean
+        example: false
+      token:
+        type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJpc3MiOiJ0b3B0YWwuY29tIiwiZXhwIjoxNDI2NDIAwLCJodHRwOi8vdG9wdGFsLmNvbS9qd3RfY2xhaW1zL2lzX2FkbWluIjp0cnVlLCJjb21wYW55IjoiVG9wdGFsIiwiYXdlc29tZSI6dHJ1ZX0.yRQYnWzskCZUxPwaQupWkiUzKELZ49eM7oWxAQK_ZXw
+      favorite_coins:
+        type: array
+        items: 
+          $ref: '#/definitions/Coin'
+      alerts:
+        type: array
+        items:
+          $ref: '#/definitions/Alert'
+          
+  Coin:
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: 89755268-104f-11ea-8d71-362b9e155667
+      name:
+        type: string
+        example: Bitcoin
+      rank:
+        type: integer
+        example: 1
+      symbol:
+        type: string
+        example: "BTC"
+      supply:
+        type: integer
+        example: 17193925.0000000000000000
+      maxSupply:
+        type: integer
+        example: 21000000.0000000000000000
+      market_cap_usd:
+        type: integer
+        example: 119179791817.6740161068269075
+      volume_usd_24hr:
+        type: integer
+        example: 2928356777.6066665425687196
+      price_usd:
+        type: integer
+        example: 6931.5058555666618359
+      change_percentage_24hr:
+        type: integer
+        example: -0.8101417214350335
+      vwap_24hr:
+        type: integer
+        example: 7175.0663247679233209s
+  
+  CoinHistory:
+    properties:
+      price_usd:
+        type: integer
+        example: 7423.423472398
+      timestamp:
+        type: integer
+        example: 1530489600000
+      
+  Alert:
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: 89755268-104f-11ea-8d71-362b9e155667
+      user_id:
+        type: string
+        format: uuid
+        example: 89755268-104f-11ea-8d71-362b9e155667
+      alert_value:
+        type: integer
+        example: 8000.0000
+      operator:
+        type: integer
+        example: -1
+      coin:
+        $ref: '#/definitions/Coin'
+        
+  News:
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: 89755268-104f-11ea-8d71-362b9e155667
+      title:
+        type: string
+        example: "Arbitration on a Governed Blockchain: EOS’ Crisis of Dispute Resolution"
+      url:
+        type: string
+        example: "https://cryptocontrol.io/r/api/article/5b3865405c5681000f2f7407?ref=5ac11440ec0af7be35528459"
+      source:
+        properties:
+          url:
+            type: string
+            example: "https://cointelegraph.com/"
+          name:
+            type: string
+            example: "CoinTelegraph"
+
+
+
+
+
+
+
