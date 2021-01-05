@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="crys-frontend-gui" />
         <module name="crys-api" />
+        <module name="Crys-Project" />
         <module name="CryS-Project" />
       </profile>
     </annotationProcessing>

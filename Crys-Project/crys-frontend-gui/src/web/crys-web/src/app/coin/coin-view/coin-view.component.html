@@ -14,7 +14,7 @@
 
 <section id="prices" class="prices">
   <div class="container">
-    <div *ngIf="favoriteCoins !== undefined && favoriteCoins.length > 0 && isUserLogged()">
+    <div *ngIf="favoriteCoins !== undefined && favoriteCoins?.length > 0 && isUserLogged()">
       <div class="heading-part text-center">
         <h2 class="main_title mt_100 mb_20 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">Favorite cryptocurrencies</h2>
       </div>

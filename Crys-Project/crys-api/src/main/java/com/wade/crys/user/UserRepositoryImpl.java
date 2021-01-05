@@ -14,8 +14,8 @@ public class UserRepositoryImpl implements UserRepository {
     private static List<User> users = new ArrayList<>();
 
     static {
-        users.add(new User("uuid-13ew2-21312-31sq", "Daniel", "Oana", "test", "test", "07656784385", true, null, null));
-        users.add(new User("uuid-oa423-rwe3-423wr", "Rares", "Podaru", "rares.podaru@gmail.com", "password-21", "07656784385", true, null, null));
+        users.add(new User("uuid-13ew2-21312-31sq", "Daniel", "Oana", "test", "test", "07656784385", true, new ArrayList<>(), new ArrayList<>()));
+        users.add(new User("uuid-oa423-rwe3-423wr", "Rares", "Podaru", "rares.podaru@gmail.com", "password-21", "07656784385", true, new ArrayList<>(), new ArrayList<>()));
     }
 
     @Override
