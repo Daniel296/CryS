@@ -1,0 +1,41 @@
+<!-- page-header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="auth-pages-header">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.page-header-->
+
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <!-- login-form -->
+      <div class="offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 ">
+        <div class="login-form">
+          <h2 class="text-center mb30">Sign in to CoinTrade</h2>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label class="control-label sr-only" for="email"></label>
+              <input id="email" type="text" formControlName="email"  name="email" placeholder="Email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="control-label sr-only" for="password"></label>
+              <input id="password" type="password" formControlName="password"  name="password" placeholder="create password" class="form-control" required>
+            </div>
+            <span>
+              <input id="box1" type="checkbox" class="with-font">
+              <label for="box1">Keep me signed in on this computer</label>
+            </span>
+            <button type="submit" name="singlebutton" class="btn btn-default btn-lg  btn-block mt20">Sign</button>
+          </form>
+        </div>
+        <p>Not a member? <a routerLink="register" class="text-yellow">Sign up</a><span class="pull-right"><a routerLink="">Back to Home</a> </span></p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<!-- page-header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-caption">
+          <h1 class="page-title">Cryptocurrencies</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.page-header-->
+
+<section id="prices" class="prices">
+  <div class="container">
+    <div *ngIf="favoriteCoins !== undefined && favoriteCoins.length > 0 && isUserLogged()">
+      <div class="heading-part text-center">
+        <h2 class="main_title mt_100 mb_20 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">Favorite cryptocurrencies</h2>
+      </div>
+<!--      <a mdbBtn color="warning" class="waves-light" (click)="showWarning()" mdbWavesEffect>Warning message</a>-->
+      <app-coins-list [coinListType]="'favorite'" (addCoinToFavoriteEmitter)="addCoinToFavorite($event)" (removeCoinFromFavoriteEmitter)="removeCoinFromFavorite($event)" [isLogged]="isUserLogged()" [coins]="favoriteCoins"></app-coins-list><br>
+    </div>
+    <div class="heading-part text-center">
+      <h2 class="main_title mt_100 mb_20 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">All cryptocurrencies</h2>
+    </div>
+
+    <app-coins-list [coinListType]="'all'" (addCoinToFavoriteEmitter)="addCoinToFavorite($event)" (removeCoinFromFavoriteEmitter)="removeCoinFromFavorite($event)" [isLogged]="isUserLogged()" [coins]="allCoins"></app-coins-list>
+  </div>
+</section>

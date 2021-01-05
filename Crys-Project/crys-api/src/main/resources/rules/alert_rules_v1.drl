@@ -1,0 +1,33 @@
+package drools
+
+import com.wade.crys.alert.model.Alert;
+
+global com.wade.crys.utils.AlertHelper helper;
+global java.util.List alerts;
+
+//bitcoin: 110
+//
+//alert:  120 >= actual_value   --> -1
+//alert:  105 <= actual_value	-->  1
+
+// "User alerts for coins with actual value is lower or equal with actual value of coin"
+rule "Alerts for coins with descending price value"
+dialect "mvel"
+when
+    $a : Alert(operator == -1)
+    eval(helper.checkIfValueIsBiggerOrEqual($a.coin, $a.alertValue))
+then
+    alerts.add($a);
+end
+
+
+// "User alerts for coins with actual value is bigger or equal with actual value of coin"
+rule "Alerts for coins with ascending price value"
+dialect "mvel"
+when
+    $a : Alert(operator == 1)
+    eval(helper.checkValueIsLowerOrEqual($a.coin, $a.alertValue))
+then
+    alerts.add($a);
+end
+

@@ -1,0 +1,45 @@
+<div class="coin-section">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Rank</th>
+            <th scope="col">Coin</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Price (USD)</th>
+            <th scope="col">Change (24h)</th>
+            <th scope="col">Market Cap</th>
+            <th scope="col">Volume (24h)</th>
+            <th scope="col" *ngIf="isLogged == true">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let coin of coins">
+            <th scope="row">{{ coin.rank }}</th>
+            <td><img [src]="coin.logoURL" alt="" class="coin-logo">{{ coin.name }}</td>
+            <td>{{ coin.symbol }}</td>
+            <td class="price-value">${{ coin.priceUsd | number: '.2' }}</td>
+            <td [ngClass]="{'negative-value': coin.changePercentage24hr < 0, 'positive-value': coin.changePercentage24hr >= 0 }"> {{ coin.changePercentage24hr.toFixed(2) }}%</td>
+            <td>${{ coin.marketCapUsd | number: '.2' }}</td>
+            <td>${{ coin.volumeUsd24hr | number: '.2' }}</td>
+            <td *ngIf="isLogged == true" class="coin-actions">
+
+              <div *ngIf="coinListType === 'favorite'">
+                <button class="btn btn-xs btn-primary"><i class="fa fa-bell"></i></button>
+                <button class="btn btn-xs btn-danger" (click)="removeCoin(coin.id)"><i class="fa fa-trash"></i></button>
+              </div>
+
+              <div *ngIf="coinListType === 'all'">
+                <button class="btn btn-xs btn-warning" (click)="addCoin(coin.id)"><i class="fa fa-star"></i></button>
+              </div>
+
+            </td>
+
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

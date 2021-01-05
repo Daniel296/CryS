@@ -1,0 +1,63 @@
+<!-- page-header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="auth-pages-header">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.page-header-->
+
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <!-- register-form -->
+      <div class="offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 ">
+        <div class="register-form">
+          <h2 class="text-center mb30">{{ currentUser.firstName }} {{ currentUser.lastName }}</h2>
+          <form [formGroup]="detailsForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label class="control-label sr-only" for="firstName"></label>
+              <input id="firstName" type="text" formControlName="firstName" placeholder="First Name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="control-label sr-only" for="lastName"></label>
+              <input id="lastName" type="text" formControlName="lastName" placeholder="Last Name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="control-label sr-only" for="email"></label>
+              <input id="email" type="text" formControlName="email" placeholder="Email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="control-label sr-only" for="phone"></label>
+              <input id="phone" type="text" formControlName="phone" placeholder="Phone number" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="control-label sr-only" for="password"></label>
+              <input id="password" type="password" formControlName="password" placeholder="Password" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="control-label sr-only" for="re-password"></label>
+              <input id="re-password" type="password" formControlName="confirmPassword" placeholder="Confirm password" class="form-control" required>
+              <div *ngIf="detailsForm.controls.confirmPassword.errors" class="invalid-feedback">
+                <div *ngIf="detailsForm.controls.confirmPassword.errors.required">Confirm Password is required</div>
+                <div *ngIf="detailsForm.controls.confirmPassword.errors.mustMatch">Passwords must match</div>
+              </div>
+            </div>
+            <span>
+              <input id="box1" type="checkbox" class="with-font">
+              <label for="box1"></label>
+            </span>
+            <p class="register-text">I certify that I am 18 years of age or older, and I agree to the User Agreement and <a href="#" color="red"> Privacy Policy.</a></p>
+            <button type="submit" name="singlebutton" class="btn btn-default btn-lg  btn-block mb10" [disabled]="!registerForm.valid">create Account</button>
+          </form>
+        </div>
+        <p>Already have an account? <a routerLink="login" class="text-yellow"> Sign In </a> <span class="pull-right"><a routerLink="">Back to Home</a></span> </p>
+      </div>
+      <!-- /.register-form -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<!-- header-section-->
+<div class="header-wrapper fixed-top">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="logo"> <a routerLink=""><img src="../../../assets/images/logo.png" alt=""> </a> </div>
+      </div>
+      <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
+        <!-- navigations-->
+        <div class="navigation">
+          <div id="navigation">
+            <ul>
+              <li class="active"><a routerLink="">Home</a></li>
+              <li class="active"><a routerLink="coins">Coins</a></li>
+              <li class="active"><a routerLink="news">News</a></li>
+              <li><a href="contact.html">Contact</a></li>
+
+              <li class="has-sub" *ngIf="currentUser"><a><i class="fa fa-user" aria-hidden="true"></i> {{ currentUser.firstName }} {{ currentUser.lastName }}</a>
+                <ul>
+                  <li><a routerLink="account">Account</a></li>
+                  <li><a style="cursor: pointer" (click)="logout()">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /.navigations-->
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-none d-xl-block d-lg-block" *ngIf="!currentUser">
+        <div class="header-quick-info">
+          <a routerLink="login" class="btn btn-white btn-xs mr-1">Login</a>
+          <a routerLink="register" class="btn btn-default btn-xs">Sign up</a>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<!-- /. header-section-->
