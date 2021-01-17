@@ -12,16 +12,9 @@ public interface CoinRepository {
 
     Optional<Coin> getCoinById(String id);
 
-    List<Coin> getAllCoins();
-
-
     List<Coin> getAllCoinsOrderByRankAsc();
 
     List<Coin> getAllByNameContaining(String term);
 
     void addCoin(Coin coin);
-
-    void updateCoin(String id, Coin coin);
-
-    void deleteAll();
 }

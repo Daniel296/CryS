@@ -4,14 +4,17 @@ import static com.wade.crys.utils.rdf.CRYS.CRYS_URI;
 import static com.wade.crys.utils.rdf.CRYS.USER_URI;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.jena.query.Dataset;
+import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,14 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> getUserByEmail(String email) {
 
+        dataset.begin(ReadWrite.READ);
+//            try(QueryExecution qExec = QueryExecutionFactory.create(CrysOntologyEnum.GET_ALL_USERS_QRY.getCode(), dataset)) {
+        try(QueryExecution qExec = QueryExecutionFactory.create("SELECT ?s ?p ?o WHERE { ?s ?p ?o }", dataset)) {
+            ResultSet rs = qExec.execSelect() ;
+            ResultSetFormatter.out(rs) ;
+        }
+        dataset.end();
+
         return Optional.ofNullable(getUserFromQueryResult(String.format(CrysOntologyEnum.GET_USER_BY_EMAIL_QRY.getCode(), email)));
     }
 
@@ -62,13 +73,6 @@ public class UserRepositoryImpl implements UserRepository {
 
             dataset.commit();
             dataset.end();
-
-//            dataset.begin(ReadWrite.READ);
-//            try(QueryExecution qExec = QueryExecutionFactory.create(CrysOntologyEnum.GET_ALL_USERS_QRY.getCode(), dataset)) {
-//                ResultSet rs = qExec.execSelect() ;
-//                ResultSetFormatter.out(rs) ;
-//            }
-//            dataset.end();
         } catch (Exception e) {
 
             System.out.println(e);

@@ -33,6 +33,7 @@ export class AuthService {
   }
 
   register(user: User) {
+    console.log(user);
     return this.http.post(this.baseUrl + 'api/user/register', user, {headers: this.headers});
   }
 

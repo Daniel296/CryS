@@ -33,7 +33,7 @@ public class QuartzConfig {
                 .withIdentity("Quartz_Coin_Data_Collector_Job")
                 .startNow()
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                        .withIntervalInSeconds(5)
+                        .withIntervalInSeconds(10)
                         .repeatForever())
                 .build();
     }

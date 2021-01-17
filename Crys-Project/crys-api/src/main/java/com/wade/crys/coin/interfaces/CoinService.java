@@ -12,13 +12,7 @@ public interface CoinService {
 
     List<Coin> getCoinsBySearchTerm(String term);
 
-    List<Coin> getAllCoins();
-
     List<Coin> getAllCoinsOrderByRankAsc();
 
     void addCoin(Coin coin);
-
-    void updateCoin(String id, Coin coin);
-
-    void deleteAllCoins();
 }

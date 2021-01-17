@@ -7,7 +7,7 @@ export interface User {
   lastName: string;
   email: string;
   password: string;
-  phone: string;
+  telephone: string;
   emailNotification: boolean;
   favoriteCoins: Coin[];
   alerts: Alert[];

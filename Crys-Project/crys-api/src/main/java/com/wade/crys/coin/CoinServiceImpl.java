@@ -26,11 +26,6 @@ public class CoinServiceImpl implements CoinService {
     }
 
     @Override
-    public List<Coin> getAllCoins() {
-        return coinRepository.getAllCoins();
-    }
-
-    @Override
     public List<Coin> getAllCoinsOrderByRankAsc() {
         return coinRepository.getAllCoinsOrderByRankAsc();
     }
@@ -39,34 +34,4 @@ public class CoinServiceImpl implements CoinService {
     public void addCoin(Coin coin) {
         coinRepository.addCoin(coin);
     }
-
-    @Override
-    public void updateCoin(String id, Coin updatedCoin) {
-
-        Optional<Coin> optional = coinRepository.getCoinById(id);
-
-        if(optional.isPresent()) {
-            Coin coin = optional.get();
-
-            coin.setName(updatedCoin.getName());
-            coin.setLogoURL(updatedCoin.getLogoURL());
-            coin.setVolumeUsd24hr(updatedCoin.getVolumeUsd24hr());
-            coin.setMaxSupply(updatedCoin.getMaxSupply());
-            coin.setChangePercentage24hr(updatedCoin.getChangePercentage24hr());
-            coin.setPriceUsd(updatedCoin.getPriceUsd());
-            coin.setRank(updatedCoin.getRank());
-            coin.setSupply(updatedCoin.getSupply());
-            coin.setSymbol(updatedCoin.getSymbol());
-            coin.setVwap24hr(updatedCoin.getVwap24hr());
-
-            coinRepository.addCoin(coin);
-        }
-    }
-
-    @Override
-    public void deleteAllCoins() {
-        coinRepository.deleteAll();
-    }
-
-
 }
