@@ -18,7 +18,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})], // this config to scroll to the top when we redirect to another route
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', relativeLinkResolution: 'legacy' })], // this config to scroll to the top when we redirect to another route
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
