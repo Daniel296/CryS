@@ -1,12 +1,0 @@
-
-U
-java:S1128":Remove this unused import 'com.wade.crys.coin.model.Coin'.(Ëı¡úÿÿÿÿ
-œ
-java:S11863"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(€ĞìÊÿÿÿÿÿ
-—
-java:S11868"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ìª§ì
-V	java:S125"<This block of commented-out lines of code should be removed.(Šî±êøÿÿÿÿ
-q
-java:S2159"VRemove this call to "equals"; comparisons between unrelated types always return false.(Øèğäúÿÿÿÿ
-A
-java:S1168#"+Return an empty collection instead of null.(¥¹ï
