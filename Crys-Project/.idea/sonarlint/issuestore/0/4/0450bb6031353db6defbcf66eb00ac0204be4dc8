@@ -1,0 +1,10 @@
+
+x
+java:S3305"]Inject this field value directly into "authenticationProvider", the only method that uses it.(ÙÍ•¯üÿÿÿÿ
+v
+java:S1128"[Remove this unused import 'org.springframework.web.servlet.config.annotation.EnableWebMvc'.(Â°Ä¡úÿÿÿÿ
+[
+java:S1874J"?Remove this use of "WebMvcConfigurerAdapter"; it is deprecated.(¯¤¢H8ä™ª í.
+V
+java:S1874)";Remove this use of "NoOpPasswordEncoder"; it is deprecated.(¨¼‹ªüÿÿÿÿ
+]	java:S1250"<This block of commented-out lines of code should be removed.(Éœû‚ýÿÿÿÿ8§‹Ø í.

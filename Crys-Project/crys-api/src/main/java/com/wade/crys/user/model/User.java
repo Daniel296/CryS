@@ -1,8 +1,9 @@
 package com.wade.crys.user.model;
 
+import java.util.List;
+
 import com.wade.crys.alert.model.Alert;
 import com.wade.crys.coin.model.Coin;
-import java.util.List;
 
 public class User {
 
@@ -15,7 +16,8 @@ public class User {
     private String email;
 
     private String password;
-    private String phone;
+
+    private String telephone;
 
     private String token;
 
@@ -27,13 +29,13 @@ public class User {
 
     public User() {}
 
-    public User(String uuid, String firstName, String lastName, String email, String password, String phone, boolean emailNotification, List<Coin> favoriteCoins, List<Alert> alerts) {
+    public User(String uuid, String firstName, String lastName, String email, String password, String telephone, boolean emailNotification, List<Coin> favoriteCoins, List<Alert> alerts) {
         this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.phone = phone;
+        this.telephone = telephone;
         this.emailNotification = emailNotification;
         this.favoriteCoins = favoriteCoins;
         this.alerts = alerts;
@@ -79,12 +81,12 @@ public class User {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public boolean isEmailNotification() {

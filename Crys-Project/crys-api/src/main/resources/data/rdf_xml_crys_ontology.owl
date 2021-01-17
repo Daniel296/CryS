@@ -1,0 +1,393 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/crys#"
+     xml:base="http://www.semanticweb.org/crys"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:crys="http://www.semanticweb.org/crys/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:crys1="http://www.semanticweb.org/crys#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/crys"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/email -->
+
+    <owl:AnnotationProperty rdf:about="http://xmlns.com/foaf/0.1/email">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/firstName -->
+
+    <owl:AnnotationProperty rdf:about="http://xmlns.com/foaf/0.1/firstName">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/lastName -->
+
+    <owl:AnnotationProperty rdf:about="http://xmlns.com/foaf/0.1/lastName">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/telephone -->
+
+    <owl:AnnotationProperty rdf:about="http://xmlns.com/foaf/0.1/telephone">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/crys#contains -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/crys#contains">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Alert"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#hasAlert -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/crys#hasAlert">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/crys#Alert"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#hasFavoriteCoin -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/crys#hasFavoriteCoin">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#hasHistory -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/crys#hasHistory">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/crys#CoinHistory"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/crys#alertValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#alertValue">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Alert"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#changePercentage24hr -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#changePercentage24hr">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#emailNotification -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#emailNotification">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#logoUrl -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#logoUrl">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#marketSupply -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#marketSupply">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#maxSupply -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#maxSupply">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#name -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#name">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#operator -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#operator">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Alert"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#password -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#password">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#priceUsd -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#priceUsd">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#CoinHistory"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#rank -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#rank">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#supply -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#supply">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#symbol -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#symbol">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#timestamp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#timestamp">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#CoinHistory"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTimeStamp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#token -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#token">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#volumeUsd24hr -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#volumeUsd24hr">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#vwap24hr -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/crys#vwap24hr">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/email -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/0.1/email"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/firstName -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/0.1/firstName"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/lastName -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/0.1/lastName"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/telephone -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/0.1/telephone"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/crys#Alert -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/crys#Alert"/>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#Coin -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/crys#Coin"/>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#CoinHistory -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/crys#CoinHistory"/>
+    
+
+
+    <!-- http://www.semanticweb.org/crys#User -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/crys#User">
+        <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Person -->
+
+    <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/crys#UserCreated112 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/crys#UserCreated112">
+        <rdf:type rdf:resource="http://www.semanticweb.org/crys#User"/>
+        <emailNotification rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</emailNotification>
+        <password>pass123</password>
+        <foaf:email>daniel.oana@gmail.com</foaf:email>
+        <foaf:firstName>Daniel</foaf:firstName>
+        <foaf:lastName>Oana</foaf:lastName>
+        <foaf:telephone rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0756784385</foaf:telephone>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/crys#Alert"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/crys#Coin"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/crys#CoinHistory"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/crys#User"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

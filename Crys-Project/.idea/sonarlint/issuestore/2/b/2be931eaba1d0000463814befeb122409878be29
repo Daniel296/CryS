@@ -1,0 +1,13 @@
+
+G
+java:S1068",Remove this unused "USER_URI" private field.(Š‚”ôıÿÿÿÿ
+G
+java:S1068",Remove this unused "NEWS_URI" private field.(µªÌ¹ûÿÿÿÿ
+J
+java:S1068"4Remove this unused "COIN_HISTORY_URI" private field.(¨ó´Ê
+P
+java:S1118":Add a private constructor to hide the implicit public one.(´ú«Á
+B
+java:S1068	",Remove this unused "BASE_URI" private field.(ü¾ø
+H
+java:S1068"-Remove this unused "ALERT_URI" private field.(Ì¿ĞÉúÿÿÿÿ

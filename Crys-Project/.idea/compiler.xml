@@ -11,6 +11,7 @@
         <module name="crys-api" />
         <module name="Crys-Project" />
         <module name="CryS-Project" />
+        <module name="crys" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />

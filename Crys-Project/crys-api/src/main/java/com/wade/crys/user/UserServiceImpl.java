@@ -1,33 +1,45 @@
 package com.wade.crys.user;
 
-import com.wade.crys.user.model.UserDetailsImpl;
-import com.wade.crys.user.model.User;
-import com.wade.crys.user.interfaces.UserRepository;
-import com.wade.crys.user.interfaces.UserService;
+import java.util.Optional;
+
+import org.apache.jena.query.Dataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.UUID;
+import com.wade.crys.user.interfaces.UserRepository;
+import com.wade.crys.user.interfaces.UserService;
+import com.wade.crys.user.model.User;
+import com.wade.crys.user.model.UserDetailsImpl;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
+
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private Dataset dataset;
+
     @Override
     public void addUser(User user) {
-//        user.setUuid(UUID.randomUUID().toString());
-        this.userRepository.addUser(user);
+
+        userRepository.addUser(user);
     }
 
     @Override
     public Optional<User> getUserById(String uuid) {
+
         return userRepository.getUserById(uuid);
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+
+        return userRepository.getUserByEmail(email);
     }
 
     @Override
@@ -45,7 +57,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.setAlerts(updatedUser.getAlerts());
             user.setFavoriteCoins(updatedUser.getFavoriteCoins());
 
-            userRepository.addUser(user);
+            //userRepository.addUser(user);
         }
     }
 
@@ -60,4 +72,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         return new UserDetailsImpl(user.get());
     }
+
 }

@@ -1,10 +1,10 @@
 package com.wade.crys.user;
 
-import com.auth0.jwt.JWT;
-import com.wade.crys.config.SecurityConstants;
-import com.wade.crys.user.model.UserDetailsImpl;
-import com.wade.crys.user.model.User;
-import com.wade.crys.user.interfaces.UserService;
+import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
+
+import java.util.Date;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +15,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
-import javax.xml.ws.Response;
-import java.util.Date;
-import java.util.Optional;
-
-import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
+import com.auth0.jwt.JWT;
+import com.wade.crys.config.SecurityConstants;
+import com.wade.crys.user.interfaces.UserService;
+import com.wade.crys.user.model.User;
+import com.wade.crys.user.model.UserDetailsImpl;
 
 @RestController
 @RequestMapping("/api/user")
@@ -37,6 +40,17 @@ public class UserController {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity getUserByEmail(@PathVariable("email") String email) {
+        Optional<User> user = userService.getUserByEmail(email);
+
+        if(user.isPresent()) {
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
 
     @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody User requestUser) {

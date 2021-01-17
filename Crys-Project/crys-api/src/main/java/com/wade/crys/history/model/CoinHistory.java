@@ -8,12 +8,12 @@ public class CoinHistory {
 
     private Double priceUSD;
 
-    private Long time;
+    private Long timestamp;
 
-    public CoinHistory(String coinId, Double priceUSD, Long time) {
+    public CoinHistory(String coinId, Double priceUSD, Long timestamp) {
         this.coinId = coinId;
         this.priceUSD = priceUSD;
-        this.time = time;
+        this.timestamp = timestamp;
     }
 
     public String getCoinId() {
@@ -40,11 +40,11 @@ public class CoinHistory {
         this.priceUSD = priceUSD;
     }
 
-    public Long getTime() {
-        return time;
+    public Long getTimestamp() {
+        return timestamp;
     }
 
-    public void setTime(Long time) {
-        this.time = time;
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 }

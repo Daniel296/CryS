@@ -1,9 +1,9 @@
 package com.wade.crys.user.interfaces;
 
-import com.wade.crys.user.model.User;
-
 import java.util.List;
 import java.util.Optional;
+
+import com.wade.crys.user.model.User;
 
 public interface UserRepository {
 
@@ -13,6 +13,5 @@ public interface UserRepository {
 
     List<User> getAllUsers();
 
-    void addUser(User user);
-
+	void addUser(User user);
 }

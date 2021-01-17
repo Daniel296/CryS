@@ -1,0 +1,15 @@
+
+E
+java:S37404"/Provide the parametrized type for this generic.(³Ô×Ù
+J
+java:S37409"/Provide the parametrized type for this generic.(¥‚Ìøÿÿÿÿ
+E
+java:S3740<"/Provide the parametrized type for this generic.(­ÔŒ
+
+java:S4449+"ˆAnnotate the parameter with @javax.annotation.Nullable in constructor declaration, or make sure that null can not be passed as argument.(€¼'
+
+java:S4449"ˆAnnotate the parameter with @javax.annotation.Nullable in constructor declaration, or make sure that null can not be passed as argument.(€¼'
+Z
+java:S1128"DRemove this unused import 'com.wade.crys.history.model.CoinHistory'.(¿àå‡
+n
+java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Qualifier'.(íàÄ®ıÿÿÿÿ
