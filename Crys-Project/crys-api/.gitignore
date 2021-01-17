@@ -1,3 +1,11 @@
 # file: ~/.gitignore_global
 .DS_Store
 .idea
+*.iws
+*.iml
+*.ipr
+
+/target/
+*/target/**
+**/META-INF/
+!.mvn/wrapper/maven-wrapper.jar
