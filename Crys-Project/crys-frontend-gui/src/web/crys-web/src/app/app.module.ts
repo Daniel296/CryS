@@ -12,7 +12,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {JwtInterceptor} from "./user/services/jwt.interceptor";
 import { NotificationPanelComponent } from './notification/notification-panel/notification-panel.component';
 import { NotificationItemComponent } from './notification/notification-item/notification-item.component';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
