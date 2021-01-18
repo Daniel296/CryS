@@ -107,12 +107,12 @@ public class CoinCapAPI implements CoinCollector {
                 String symbol = (String) jsonCoin.get("symbol");
                 String name = (String) jsonCoin.get("name");
                 Double supply = Double.parseDouble((String) jsonCoin.get("supply"));
-                Double maxSupply =  jsonCoin.get("maxSupply") == null ? null : Double.parseDouble((String) jsonCoin.get("maxSupply"));
+                Double maxSupply =  jsonCoin.get("maxSupply") == null ? 0.0 : Double.parseDouble((String) jsonCoin.get("maxSupply"));
                 Double marketCapUsd =  Double.parseDouble((String) jsonCoin.get("marketCapUsd"));
                 Double volumeUsd24Hr =  Double.parseDouble((String) jsonCoin.get("volumeUsd24Hr"));
                 Double priceUsd =  Double.parseDouble((String) jsonCoin.get("priceUsd"));
                 Double changePercent24Hr =  Double.parseDouble((String) jsonCoin.get("changePercent24Hr"));
-                Double vwap24Hr =  jsonCoin.get("vwap24Hr") == null ? null : Double.parseDouble((String) jsonCoin.get("vwap24Hr"));
+                Double vwap24Hr =  jsonCoin.get("vwap24Hr") == null ? 0.0 : Double.parseDouble((String) jsonCoin.get("vwap24Hr"));
 
                 coins.add(new Coin(id, name, rank, symbol, IMAGE_NOUT_FOUND_URL, supply, maxSupply, marketCapUsd, volumeUsd24Hr, priceUsd, changePercent24Hr, vwap24Hr));
             }

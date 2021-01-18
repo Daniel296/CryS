@@ -8,26 +8,29 @@ import static com.wade.crys.utils.rdf.CRYS.CRYS_URI;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
-import com.wade.crys.coin.interfaces.CoinRepository;
-import com.wade.crys.coin.model.Coin;
-import com.wade.crys.user.model.User;
-import com.wade.crys.utils.rdf.CRYS;
-import com.wade.crys.utils.rdf.CrysOntologyEnum;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.apache.jena.query.Dataset;
+import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.update.UpdateAction;
+import org.apache.jena.update.UpdateFactory;
+import org.apache.jena.update.UpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import com.wade.crys.coin.interfaces.CoinRepository;
+import com.wade.crys.coin.model.Coin;
+import com.wade.crys.utils.rdf.CRYS;
+import com.wade.crys.utils.rdf.CrysOntologyEnum;
 
 @Repository
 public class CoinRepositoryImpl implements CoinRepository {
@@ -39,7 +42,39 @@ public class CoinRepositoryImpl implements CoinRepository {
 
     @Override
     public Optional<Coin> getCoinById(String id) {
-        return coins.stream().filter(coin -> coin.getId().equals(id)).findFirst();
+
+        Coin coin = null;
+
+        dataset.begin(ReadWrite.READ);
+
+        try{
+            ResultSet rs = QueryExecutionFactory.create(String.format(CrysOntologyEnum.GET_COIN_BY_ID_QRY.getCode(), id), dataset).execSelect();
+
+            QuerySolution qs = rs.next();
+
+            String name = qs.get("name").toString();
+            Integer rank = Integer.parseInt(qs.get("rank").toString());
+            String symbol = qs.get("symbol").toString();
+            String logoUrl = qs.get("logoUrl").toString();
+            Double supply = Double.parseDouble(!qs.get("supply").toString().isEmpty() ? qs.get("supply").toString() : "0.00");
+            Double maxSupply = Double.parseDouble(!qs.get("maxSupply").toString().isEmpty() ? qs.get("maxSupply").toString() : "0.00");
+            Double marketCapUsd = Double.parseDouble(!qs.get("marketCapUsd").toString().isEmpty() ? qs.get("marketCapUsd").toString() : "0.00");
+            Double volumeUsd24hr = Double.parseDouble(!qs.get("volumeUsd24hr").toString().isEmpty() ? qs.get("volumeUsd24hr").toString() : "0.00");
+            Double priceUsd = Double.parseDouble(!qs.get("priceUsd").toString().isEmpty() ? qs.get("priceUsd").toString() : "0.00");
+            Double changePercentage24hr = Double.parseDouble(!qs.get("changePercentage24hr").toString().isEmpty() ? qs.get("changePercentage24hr").toString() : "0.00");
+            Double vwap24hr = Double.parseDouble(!qs.get("vwap24hr").toString().isEmpty() ? qs.get("vwap24hr").toString() : "0.00");
+
+            coin = new Coin(name, name, rank, symbol, logoUrl, supply, maxSupply, marketCapUsd, volumeUsd24hr,
+                        priceUsd, changePercentage24hr, vwap24hr);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        finally {
+
+            dataset.end();
+        }
+
+        return Optional.ofNullable(coin);
     }
 
     @Override
@@ -57,18 +92,19 @@ public class CoinRepositoryImpl implements CoinRepository {
                 QuerySolution qs = rs.next();
 
                 String name = qs.get("name").toString();
-                Integer rank = Integer.parseInt(qs.get("rank").toString());
+                Integer rank = Integer.parseInt(qs.get("rank").toString().trim());
                 String symbol = qs.get("symbol").toString();
                 String logoUrl = qs.get("logoUrl").toString();
-                Double supply = Double.parseDouble(qs.get("supply").toString());
-                Double maxSupply = Double.parseDouble(qs.get("maxSupply").toString());
-                Double marketCapUsd = Double.parseDouble(qs.get("marketCapUsd").toString());
-                Double volumeUsd24hr = Double.parseDouble(qs.get("volumeUsd24hr").toString());
-                Double priceUsd = Double.parseDouble(qs.get("priceUsd").toString());
-                Double changePercentage24hr = Double.parseDouble(qs.get("changePercentage24hr").toString());
-                Double vwap24hr = Double.parseDouble(qs.get("vwap24hr").toString());
+                Double supply = Double.parseDouble(!qs.get("supply").toString().isEmpty() ? qs.get("supply").toString().trim() : "0.00");
+                Double maxSupply = Double.parseDouble(!qs.get("maxSupply").toString().isEmpty() ? qs.get("maxSupply").toString().trim() : "0.00");
+                Double marketCapUsd = Double.parseDouble(!qs.get("marketCapUsd").toString().isEmpty() ? qs.get("marketCapUsd").toString().trim() : "0.00");
+                Double volumeUsd24hr = Double.parseDouble(!qs.get("volumeUsd24hr").toString().isEmpty() ? qs.get("volumeUsd24hr").toString().trim() : "0.00");
+                Double priceUsd = Double.parseDouble(!qs.get("priceUsd").toString().isEmpty() ? qs.get("priceUsd").toString().trim() : "0.00");
+                Double changePercentage24hr = Double.parseDouble(!qs.get("changePercentage24hr").toString().isEmpty() ? qs.get("changePercentage24hr").toString().trim() : "0.00");
+                Double vwap24hr = Double.parseDouble(!qs.get("vwap24hr").toString().isEmpty() ? qs.get("vwap24hr").toString().trim() : "0.00");
 
-                coins.add(new Coin(name, name, rank, symbol, logoUrl, supply, maxSupply, marketCapUsd, volumeUsd24hr, priceUsd, changePercentage24hr, vwap24hr));
+                coins.add(new Coin(name, name, rank, symbol, logoUrl, supply, maxSupply, marketCapUsd, volumeUsd24hr,
+                        priceUsd, changePercentage24hr, vwap24hr));
             }
 
         } finally {
@@ -105,11 +141,54 @@ public class CoinRepositoryImpl implements CoinRepository {
         coinResource.addProperty(CRYS.changePercentage24hr, coin.getChangePercentage24hr() != null ? coin.getChangePercentage24hr().toString() : "");
         coinResource.addProperty(CRYS.vwap24hr, coin.getVwap24hr() != null ? coin.getVwap24hr().toString() : "");
 
-        dataset.addNamedModel(COIN_URI, coinModel);
-
-        System.out.println(coin.getName());
+        dataset.addNamedModel(COIN_URI + coin.getSymbol(), coinModel);
 
         dataset.commit();
         dataset.end();
+
+        deleteAllCoins(coin);
+
+        dataset.begin(ReadWrite.READ);
+        try(QueryExecution qExec = QueryExecutionFactory.create("SELECT ?s ?p ?o WHERE { ?s ?p ?o }", dataset)) {
+            ResultSet rs = qExec.execSelect() ;
+            ResultSetFormatter.out(rs) ;
+        }
+        dataset.end();
+    }
+
+    @Override
+    public void updateCoin(Coin coin) {
+
+        String statement = String.format(CrysOntologyEnum.UPDATE_COIN_QRY.getCode(), coin.getPriceUsd(), coin.getRank(),
+                coin.getSymbol(), coin.getSupply(), coin.getMaxSupply(), coin.getMarketCapUsd(),
+                coin.getVolumeUsd24hr(), coin.getChangePercentage24hr(), coin.getVwap24hr(), coin.getName());
+
+        execUpdateOrDeleteStatement(statement);
+    }
+
+    @Override
+    public void deleteAllCoins(Coin coin) {
+
+        execUpdateOrDeleteStatement(CrysOntologyEnum.DELETE_ALL_COINS_QRY.getCode());
+    }
+
+    private void execUpdateOrDeleteStatement(String statement) {
+
+        dataset.begin(ReadWrite.WRITE);
+
+        try {
+
+            UpdateRequest req = UpdateFactory.create(statement) ;
+            UpdateAction.execute(req, dataset);
+
+            dataset.commit();
+        } catch (Exception e) {
+
+            System.out.println(e);
+
+        } finally {
+
+            dataset.end();
+        }
     }
 }

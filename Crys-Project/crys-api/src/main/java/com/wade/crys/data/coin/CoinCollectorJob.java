@@ -34,6 +34,17 @@ public class CoinCollectorJob implements Job {
         // after that we just update values for cryptocurrencies
         List<Coin> coins = coinCapAPI.getCoinsFromAPI(!hasData);
 
+        if(!hasData) {
+
+            hasData = true;
+
+//            coins.forEach(coin -> coinService.addCoin(coin));
+        } else {
+
+//            coins.forEach(coin -> coinService.updateCoin(coin));
+        }
         coins.forEach(coin -> coinService.addCoin(coin));
+
+        System.out.println("Done!");
     }
 }

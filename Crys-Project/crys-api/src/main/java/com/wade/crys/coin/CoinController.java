@@ -26,6 +26,7 @@ public class CoinController {
         try {
             coins = coinService.getAllCoinsOrderByRankAsc();
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 

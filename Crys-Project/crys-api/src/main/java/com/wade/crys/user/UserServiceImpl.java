@@ -21,9 +21,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private Dataset dataset;
-
     @Override
     public void addUser(User user) {
 

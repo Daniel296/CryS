@@ -17,21 +17,31 @@ public class CoinServiceImpl implements CoinService {
 
     @Override
     public Optional<Coin> getCoinById(String id) {
+
         return coinRepository.getCoinById(id);
     }
 
     @Override
     public List<Coin> getCoinsBySearchTerm(String term) {
+
         return coinRepository.getAllByNameContaining(term);
     }
 
     @Override
     public List<Coin> getAllCoinsOrderByRankAsc() {
+
         return coinRepository.getAllCoinsOrderByRankAsc();
     }
 
     @Override
     public void addCoin(Coin coin) {
+
         coinRepository.addCoin(coin);
+    }
+
+    @Override
+    public void updateCoin(Coin coin) {
+
+        coinRepository.updateCoin(coin);
     }
 }

@@ -15,4 +15,6 @@ public interface CoinService {
     List<Coin> getAllCoinsOrderByRankAsc();
 
     void addCoin(Coin coin);
+
+    void updateCoin(Coin coin);
 }

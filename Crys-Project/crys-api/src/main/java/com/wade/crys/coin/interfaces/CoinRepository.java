@@ -17,4 +17,8 @@ public interface CoinRepository {
     List<Coin> getAllByNameContaining(String term);
 
     void addCoin(Coin coin);
+
+    void updateCoin(Coin coin);
+
+    void deleteAllCoins(Coin coin);
 }

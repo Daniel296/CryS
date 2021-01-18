@@ -17,6 +17,7 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.sparql.engine.QueryExecutionBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -42,7 +43,6 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> getUserByEmail(String email) {
 
         dataset.begin(ReadWrite.READ);
-//            try(QueryExecution qExec = QueryExecutionFactory.create(CrysOntologyEnum.GET_ALL_USERS_QRY.getCode(), dataset)) {
         try(QueryExecution qExec = QueryExecutionFactory.create("SELECT ?s ?p ?o WHERE { ?s ?p ?o }", dataset)) {
             ResultSet rs = qExec.execSelect() ;
             ResultSetFormatter.out(rs) ;
@@ -60,7 +60,8 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             Model userModel = dataset.getDefaultModel();
 
-            Resource userResource = userModel.createResource(CRYS_URI + "user-" + UUID.randomUUID());
+            String id = UUID.randomUUID().toString();
+            Resource userResource = userModel.createResource(CRYS_URI + "user-" + id);
             userResource.addProperty(CRYS.type, userModel.createResource(CRYS.CRYS_URI + "User"));
             userResource.addProperty(FOAF.firstName, user.getFirstName());
             userResource.addProperty(FOAF.lastName, user.getLastName());
@@ -69,7 +70,7 @@ public class UserRepositoryImpl implements UserRepository {
             userResource.addProperty(CRYS.password, user.getPassword());
             userResource.addProperty(CRYS.emailNotification, user.isEmailNotification() ? "true" : "false");
 
-            dataset.addNamedModel(USER_URI, userModel);
+            dataset.addNamedModel(USER_URI + id, userModel);
 
             dataset.commit();
             dataset.end();
