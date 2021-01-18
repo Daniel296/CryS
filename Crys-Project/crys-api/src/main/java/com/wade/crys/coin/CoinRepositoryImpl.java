@@ -48,24 +48,10 @@ public class CoinRepositoryImpl implements CoinRepository {
         dataset.begin(ReadWrite.READ);
 
         try{
+
             ResultSet rs = QueryExecutionFactory.create(String.format(CrysOntologyEnum.GET_COIN_BY_ID_QRY.getCode(), id), dataset).execSelect();
 
-            QuerySolution qs = rs.next();
-
-            String name = qs.get("name").toString();
-            Integer rank = Integer.parseInt(qs.get("rank").toString());
-            String symbol = qs.get("symbol").toString();
-            String logoUrl = qs.get("logoUrl").toString();
-            Double supply = Double.parseDouble(!qs.get("supply").toString().isEmpty() ? qs.get("supply").toString() : "0.00");
-            Double maxSupply = Double.parseDouble(!qs.get("maxSupply").toString().isEmpty() ? qs.get("maxSupply").toString() : "0.00");
-            Double marketCapUsd = Double.parseDouble(!qs.get("marketCapUsd").toString().isEmpty() ? qs.get("marketCapUsd").toString() : "0.00");
-            Double volumeUsd24hr = Double.parseDouble(!qs.get("volumeUsd24hr").toString().isEmpty() ? qs.get("volumeUsd24hr").toString() : "0.00");
-            Double priceUsd = Double.parseDouble(!qs.get("priceUsd").toString().isEmpty() ? qs.get("priceUsd").toString() : "0.00");
-            Double changePercentage24hr = Double.parseDouble(!qs.get("changePercentage24hr").toString().isEmpty() ? qs.get("changePercentage24hr").toString() : "0.00");
-            Double vwap24hr = Double.parseDouble(!qs.get("vwap24hr").toString().isEmpty() ? qs.get("vwap24hr").toString() : "0.00");
-
-            coin = new Coin(name, name, rank, symbol, logoUrl, supply, maxSupply, marketCapUsd, volumeUsd24hr,
-                        priceUsd, changePercentage24hr, vwap24hr);
+            coin = getCoinFromQuerySolution(rs.next());
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -83,28 +69,13 @@ public class CoinRepositoryImpl implements CoinRepository {
         List<Coin> coins = new ArrayList<>();
 
         dataset.begin(ReadWrite.READ);
-
         try{
+
             ResultSet rs = QueryExecutionFactory.create(CrysOntologyEnum.GET_ALL_COINS_ORDERED_BY_RANK_QRY.getCode(), dataset).execSelect();
 
             while(rs.hasNext()) {
 
-                QuerySolution qs = rs.next();
-
-                String name = qs.get("name").toString();
-                Integer rank = Integer.parseInt(qs.get("rank").toString().trim());
-                String symbol = qs.get("symbol").toString();
-                String logoUrl = qs.get("logoUrl").toString();
-                Double supply = Double.parseDouble(!qs.get("supply").toString().isEmpty() ? qs.get("supply").toString().trim() : "0.00");
-                Double maxSupply = Double.parseDouble(!qs.get("maxSupply").toString().isEmpty() ? qs.get("maxSupply").toString().trim() : "0.00");
-                Double marketCapUsd = Double.parseDouble(!qs.get("marketCapUsd").toString().isEmpty() ? qs.get("marketCapUsd").toString().trim() : "0.00");
-                Double volumeUsd24hr = Double.parseDouble(!qs.get("volumeUsd24hr").toString().isEmpty() ? qs.get("volumeUsd24hr").toString().trim() : "0.00");
-                Double priceUsd = Double.parseDouble(!qs.get("priceUsd").toString().isEmpty() ? qs.get("priceUsd").toString().trim() : "0.00");
-                Double changePercentage24hr = Double.parseDouble(!qs.get("changePercentage24hr").toString().isEmpty() ? qs.get("changePercentage24hr").toString().trim() : "0.00");
-                Double vwap24hr = Double.parseDouble(!qs.get("vwap24hr").toString().isEmpty() ? qs.get("vwap24hr").toString().trim() : "0.00");
-
-                coins.add(new Coin(name, name, rank, symbol, logoUrl, supply, maxSupply, marketCapUsd, volumeUsd24hr,
-                        priceUsd, changePercentage24hr, vwap24hr));
+                coins.add(getCoinFromQuerySolution(rs.next()));
             }
 
         } finally {
@@ -190,5 +161,23 @@ public class CoinRepositoryImpl implements CoinRepository {
 
             dataset.end();
         }
+    }
+
+    private Coin getCoinFromQuerySolution(QuerySolution qs) {
+
+        String name = qs.get("name").toString();
+        Integer rank = Integer.parseInt(qs.get("rank").toString().trim());
+        String symbol = qs.get("symbol").toString();
+        String logoUrl = qs.get("logoUrl").toString();
+        Double supply = Double.parseDouble(!qs.get("supply").toString().isEmpty() ? qs.get("supply").toString().trim() : "0.00");
+        Double maxSupply = Double.parseDouble(!qs.get("maxSupply").toString().isEmpty() ? qs.get("maxSupply").toString().trim() : "0.00");
+        Double marketCapUsd = Double.parseDouble(!qs.get("marketCapUsd").toString().isEmpty() ? qs.get("marketCapUsd").toString().trim() : "0.00");
+        Double volumeUsd24hr = Double.parseDouble(!qs.get("volumeUsd24hr").toString().isEmpty() ? qs.get("volumeUsd24hr").toString().trim() : "0.00");
+        Double priceUsd = Double.parseDouble(!qs.get("priceUsd").toString().isEmpty() ? qs.get("priceUsd").toString().trim() : "0.00");
+        Double changePercentage24hr = Double.parseDouble(!qs.get("changePercentage24hr").toString().isEmpty() ? qs.get("changePercentage24hr").toString().trim() : "0.00");
+        Double vwap24hr = Double.parseDouble(!qs.get("vwap24hr").toString().isEmpty() ? qs.get("vwap24hr").toString().trim() : "0.00");
+
+        return new Coin(name, name, rank, symbol, logoUrl, supply, maxSupply, marketCapUsd, volumeUsd24hr, priceUsd,
+                changePercentage24hr, vwap24hr);
     }
 }

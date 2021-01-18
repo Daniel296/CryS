@@ -1,8 +1,5 @@
 package com.wade.crys.utils.rdf;
 
-/**
- * @author doana
- */
 public enum CrysOntologyEnum {
 
 	GET_USER_BY_EMAIL_QRY(
