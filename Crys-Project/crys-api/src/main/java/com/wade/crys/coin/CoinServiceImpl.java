@@ -44,4 +44,10 @@ public class CoinServiceImpl implements CoinService {
 
         coinRepository.updateCoin(coin);
     }
+
+    @Override
+    public void deleteAllCoins() {
+
+        coinRepository.deleteAllCoins();
+    }
 }

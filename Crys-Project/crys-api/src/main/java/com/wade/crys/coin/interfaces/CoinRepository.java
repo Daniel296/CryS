@@ -20,5 +20,5 @@ public interface CoinRepository {
 
     void updateCoin(Coin coin);
 
-    void deleteAllCoins(Coin coin);
+    void deleteAllCoins();
 }

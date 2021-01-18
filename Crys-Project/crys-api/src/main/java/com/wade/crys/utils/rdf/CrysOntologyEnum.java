@@ -74,8 +74,9 @@ public enum CrysOntologyEnum {
 					"PREFIX coin: <http://www.semanticweb.org/crys/Coin/> \n" +
 					"PREFIX foaf: <http://xmlns.com/foaf/0.1#> \n" +
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+					"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
 					"\n" +
-					"SELECT * " +
+					"SELECT * \n" +
 					"WHERE { \n" +
 					"?coin rdf:type crys:Coin ;\n" +
 					"      crys:name ?name ;\n" +
@@ -90,7 +91,7 @@ public enum CrysOntologyEnum {
 					"      crys:changePercentage24hr ?changePercentage24hr ;\n" +
 					"      crys:vwap24hr ?vwap24hr ;\n" +
 					" }\n" +
-					"ORDER BY ASC(?rank)\n"
+					"ORDER BY ?rank\n"
 	),
 
 	UPDATE_COIN_QRY(

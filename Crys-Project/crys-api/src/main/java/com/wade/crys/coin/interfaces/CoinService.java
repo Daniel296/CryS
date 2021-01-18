@@ -17,4 +17,6 @@ public interface CoinService {
     void addCoin(Coin coin);
 
     void updateCoin(Coin coin);
+
+    void deleteAllCoins();
 }

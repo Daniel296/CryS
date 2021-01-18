@@ -101,7 +101,7 @@ public class CoinRepositoryImpl implements CoinRepository {
         Resource coinResource = coinModel.createResource(CRYS_URI + coin.getSymbol());
         coinResource.addProperty(CRYS.type, coinModel.createResource(CRYS_URI + "Coin"));
         coinResource.addProperty(CRYS.name, coin.getName());
-        coinResource.addProperty(CRYS.rank, coin.getRank().toString());
+        coinResource.addProperty(CRYS.rank, coin.getRank().toString().trim());
         coinResource.addProperty(CRYS.symbol, coin.getSymbol());
         coinResource.addProperty(CRYS.logoUrl, coin.getLogoURL() != null ? coin.getLogoURL() : "");
         coinResource.addProperty(CRYS.supply, coin.getSupply() != null ? coin.getSupply().toString() : "");
@@ -116,15 +116,6 @@ public class CoinRepositoryImpl implements CoinRepository {
 
         dataset.commit();
         dataset.end();
-
-        deleteAllCoins(coin);
-
-        dataset.begin(ReadWrite.READ);
-        try(QueryExecution qExec = QueryExecutionFactory.create("SELECT ?s ?p ?o WHERE { ?s ?p ?o }", dataset)) {
-            ResultSet rs = qExec.execSelect() ;
-            ResultSetFormatter.out(rs) ;
-        }
-        dataset.end();
     }
 
     @Override
@@ -138,7 +129,7 @@ public class CoinRepositoryImpl implements CoinRepository {
     }
 
     @Override
-    public void deleteAllCoins(Coin coin) {
+    public void deleteAllCoins() {
 
         execUpdateOrDeleteStatement(CrysOntologyEnum.DELETE_ALL_COINS_QRY.getCode());
     }

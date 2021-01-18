@@ -38,13 +38,13 @@ public class CoinCollectorJob implements Job {
 
             hasData = true;
 
-//            coins.forEach(coin -> coinService.addCoin(coin));
+            coinService.deleteAllCoins();
+            coins.forEach(coin -> coinService.addCoin(coin));
         } else {
 
-//            coins.forEach(coin -> coinService.updateCoin(coin));
+            coins.forEach(coin -> coinService.updateCoin(coin));
         }
-        coins.forEach(coin -> coinService.addCoin(coin));
 
-        System.out.println("Done!");
+        System.out.println("Extract data from Coincap.com.... Done!");
     }
 }
