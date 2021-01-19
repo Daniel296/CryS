@@ -18,58 +18,44 @@ import java.util.Optional;
 public class FavoriteCoinController {
 
     @Autowired
-    private UserService userService;
+        private UserService userService;
 
     @Autowired
-    private CoinService coinService;
+        private CoinService coinService;
+
+    @Autowired
+    private FavoriteCoinService favoriteCoinService;
 
     @GetMapping("/{user_id}")
     public ResponseEntity<List<Coin>> getFavoriteCoinsForUser(@PathVariable("user_id") String userId) {
-        Optional<User> optional = userService.getUserById(userId);
 
-        if(!optional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        User user = optional.get();
-
-        return new ResponseEntity<>(user.getFavoriteCoins(), HttpStatus.OK);
+        return new ResponseEntity<>(favoriteCoinService.getFavoriteCoinsForUser(userId), HttpStatus.OK);
     }
 
-    @PutMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity addFavorite(@RequestBody FavoriteCoin favoriteCoin) {
-        Optional<User> optionalUser = userService.getUserById(favoriteCoin.getUserId());
-        Optional<Coin> optionalCoin = coinService.getCoinById(favoriteCoin.getCoinId());
 
-        if(!optionalUser.isPresent() || !optionalCoin.isPresent()) {
+        try {
+
+            favoriteCoinService.addFavoriteCoin(favoriteCoin);
+        } catch (Exception e) {
+
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-
-        User user = optionalUser.get();
-        Coin coin = optionalCoin.get();
-
-        user.getFavoriteCoins().add(coin);
-
-        userService.updateUser(user.getUuid(), user);
 
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PutMapping("/remove")
+    @PostMapping("/remove")
     public ResponseEntity removeCoinFromFavorite(@RequestBody FavoriteCoin favoriteCoin) {
-        Optional<Coin> optionalCoin = coinService.getCoinById(favoriteCoin.getCoinId());
-        Optional<User> optionalUser = userService.getUserById(favoriteCoin.getUserId());
 
-        if(!optionalUser.isPresent() || !optionalCoin.isPresent()) {
+        try {
+
+            favoriteCoinService.deleteFavoriteCoin(favoriteCoin);
+        } catch (Exception e) {
+
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-
-        User user = optionalUser.get();
-        Coin coin = optionalCoin.get();
-
-        user.getFavoriteCoins().remove(coin);
-
-        userService.updateUser(user.getUuid(), user);
 
         return new ResponseEntity(HttpStatus.OK);
     }

@@ -7,7 +7,6 @@ public enum CrysOntologyEnum {
 					"PREFIX user: <http://www.semanticweb.org/crys/User/> \n" +
 					"PREFIX foaf: <http://xmlns.com/foaf/0.1#> \n" +
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
-					"PREFIX email: <http://xmlns.com/foaf/0.1#email> \n" +
 					"\n" +
 					"SELECT * " +
 					"WHERE { \n" +
@@ -28,7 +27,6 @@ public enum CrysOntologyEnum {
 					"PREFIX user: <http://www.semanticweb.org/crys/User/> \n" +
 					"PREFIX foaf: <http://xmlns.com/foaf/0.1#> \n" +
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
-					"PREFIX email: <http://xmlns.com/foaf/0.1#email> \n" +
 					"\n" +
 					"SELECT * " +
 					"WHERE { \n" +
@@ -53,6 +51,7 @@ public enum CrysOntologyEnum {
 					"SELECT * " +
 					"WHERE { \n" +
 					"?coin rdf:type crys:Coin ;\n" +
+					"      crys:id ?id ;\n" +
 					"      crys:name ?name ;\n" +
 					"      crys:rank ?rank ;\n" +
 					"      crys:symbol ?symbol ;\n" +
@@ -64,9 +63,9 @@ public enum CrysOntologyEnum {
 					"      crys:priceUsd ?priceUsd ;\n" +
 					"      crys:changePercentage24hr ?changePercentage24hr ;\n" +
 					"      crys:vwap24hr ?vwap24hr ;\n" +
-					"FILTER( ?symbol = \"%1s\") \n" +
+					"FILTER( ?id = \"%1s\") \n" +
 					" }\n" +
-					"ORDER BY ASC(?rank)\n"
+					"LIMIT 1\n"
 	),
 
 	GET_ALL_COINS_ORDERED_BY_RANK_QRY(
@@ -79,6 +78,7 @@ public enum CrysOntologyEnum {
 					"SELECT * \n" +
 					"WHERE { \n" +
 					"?coin rdf:type crys:Coin ;\n" +
+					"      crys:id ?id ;\n" +
 					"      crys:name ?name ;\n" +
 					"      crys:rank ?rank ;\n" +
 					"      crys:symbol ?symbol ;\n" +
@@ -91,7 +91,7 @@ public enum CrysOntologyEnum {
 					"      crys:changePercentage24hr ?changePercentage24hr ;\n" +
 					"      crys:vwap24hr ?vwap24hr ;\n" +
 					" }\n" +
-					"ORDER BY ?rank\n"
+					"ORDER BY xsd:integer(replace(?rank, ' ', ''))\n"
 	),
 
 	UPDATE_COIN_QRY(
@@ -122,7 +122,7 @@ public enum CrysOntologyEnum {
 					"			crys:vwap24hr \"%9s\" ; \n" +
 					"}\n" +
 					"WHERE\n" +
-					" { ?coin crys:name \"%10s\" ;\n" +
+					" { ?coin crys:id \"%10s\" ;\n" +
 					"			crys:priceUsd ?priceUsd ; \n" +
 					"			crys:rank ?rank ; \n" +
 					"			crys:symbol ?symbol ; \n" +
@@ -142,9 +142,10 @@ public enum CrysOntologyEnum {
 					"\n" +
 					"DELETE {" +
 					"	?coin rdf:type crys:Coin ; \n" +
-					"	       crys:priceUsd ?priceUsd ; \n" +
+					"			crys:id ?id ; \n" +
 					"			crys:name ?name ; \n" +
 					"			crys:rank ?rank ; \n" +
+					"	        crys:priceUsd ?priceUsd ; \n" +
 					"			crys:logoUrl ?logoUrl ; \n" +
 					"			crys:symbol ?symbol ; \n" +
 					"			crys:supply ?supply ; \n" +
@@ -156,9 +157,10 @@ public enum CrysOntologyEnum {
 					"}\n" +
 					"WHERE\n" +
 					" { ?coin rdf:type crys:Coin ;\n" +
+					"			crys:id ?id ; \n" +
 					"			crys:name ?name ; \n" +
-					"			crys:priceUsd ?priceUsd ; \n" +
 					"			crys:rank ?rank ; \n" +
+					"			crys:priceUsd ?priceUsd ; \n" +
 					"			crys:logoUrl ?logoUrl ; \n" +
 					"			crys:symbol ?symbol ; \n" +
 					"			crys:supply ?supply ; \n" +
@@ -168,6 +170,27 @@ public enum CrysOntologyEnum {
 					"			crys:changePercentage24hr ?changePercentage24hr ; \n" +
 					"			crys:vwap24hr ?vwap24hr ; \n" +
 					" }"
+	),
+
+	GET_FAVORITE_COINS_FOR_USER_QRY (
+			"PREFIX crys: <http://www.semanticweb.org/crys#> \n" +
+					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+					"\n" +
+					"SELECT * \n" +
+					"WHERE { \n" +
+					"?user rdf:type crys:User ;\n" +
+					"      crys:hasFavoriteCoin ?hasFavoriteCoin ;\n" +
+					"FILTER (contains(str(?user), \"%1s\"))" +
+					" }\n"
+	),
+
+	DELETE_FAVORITE_COIN_FOR_USER_QRY (
+			"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+					"PREFIX crys: <http://www.semanticweb.org/crys#> \n" +
+					"\n" +
+					"DELETE DATA { \n " +
+					"	 <http://www.semanticweb.org/crys#user-%1s> crys:hasFavoriteCoin \"%2s\" ; \n" +
+					"}\n"
 	);
 
 	private String code;

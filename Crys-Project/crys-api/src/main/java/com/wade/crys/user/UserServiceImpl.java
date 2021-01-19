@@ -1,6 +1,7 @@
 package com.wade.crys.user;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.apache.jena.query.Dataset;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void addUser(User user) {
+
+//            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setUuid(UUID.randomUUID().toString());
 
         userRepository.addUser(user);
     }

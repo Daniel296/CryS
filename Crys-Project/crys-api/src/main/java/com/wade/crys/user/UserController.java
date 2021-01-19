@@ -4,6 +4,7 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -80,7 +81,7 @@ public class UserController {
     public ResponseEntity registerUser(@RequestBody User user) {
 
         try {
-//            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
             userService.addUser(user);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);

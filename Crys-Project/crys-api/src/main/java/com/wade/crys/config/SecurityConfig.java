@@ -44,8 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.cors().and().csrf().disable();
-        httpSecurity.csrf().disable();
+        httpSecurity.cors().and().csrf().disable();
+//        httpSecurity.csrf().disable();
 
         httpSecurity.httpBasic()
                 .and()
@@ -60,7 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                     .antMatchers("/api/user/email/**")
                         .permitAll()
-
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest()
                     .authenticated()
@@ -75,7 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("GET","POST", "DELETE", "PUT")
+                        .allowCredentials(true).maxAge(3600);
             }
         };
     }

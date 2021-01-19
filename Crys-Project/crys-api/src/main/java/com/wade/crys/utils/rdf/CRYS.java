@@ -24,6 +24,7 @@ public class CRYS {
 	public static Property emailNotification = m.createProperty(CRYS_URI + "emailNotification");
 
 	/* ===== Coin properties ===== */
+	public static Property id = m.createProperty(CRYS_URI + "id");
 	public static Property name = m.createProperty(CRYS_URI + "name");
 	public static Property rank = m.createProperty(CRYS_URI + "rank");
 	public static Property symbol = m.createProperty(CRYS_URI + "symbol");
@@ -35,5 +36,8 @@ public class CRYS {
 	public static Property priceUsd = m.createProperty(CRYS_URI + "priceUsd");
 	public static Property changePercentage24hr = m.createProperty(CRYS_URI + "changePercentage24hr");
 	public static Property vwap24hr = m.createProperty(CRYS_URI + "vwap24hr");
+
+	/* ===== Favorite coin properties ===== */
+	public static Property hasFavoriteCoin = m.createProperty(CRYS_URI + "hasFavoriteCoin");
 
 }

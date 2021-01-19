@@ -71,22 +71,23 @@
     
 
 
-    <!-- http://www.semanticweb.org/crys#contains -->
+    <!-- http://www.semanticweb.org/crys#belongsTo -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/crys#contains">
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/crys#belongsTo">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Alert"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#CoinHistory"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/crys#Coin"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/crys#User"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://www.semanticweb.org/crys#hasAlert -->
+    <!-- http://www.semanticweb.org/crys#forCoin -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/crys#hasAlert">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/crys#Alert"/>
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/crys#forCoin">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Alert"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/crys#Coin"/>
     </owl:ObjectProperty>
     
 
@@ -97,16 +98,6 @@
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#User"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/crys#Coin"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/crys#hasHistory -->
-
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/crys#hasHistory">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/crys#Coin"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/crys#CoinHistory"/>
     </owl:ObjectProperty>
     
 

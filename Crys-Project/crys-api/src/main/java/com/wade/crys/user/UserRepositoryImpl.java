@@ -60,8 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             Model userModel = dataset.getDefaultModel();
 
-            String id = UUID.randomUUID().toString();
-            Resource userResource = userModel.createResource(CRYS_URI + "user-" + id);
+            Resource userResource = userModel.createResource(CRYS_URI + "user-" + user.getUuid());
             userResource.addProperty(CRYS.type, userModel.createResource(CRYS.CRYS_URI + "User"));
             userResource.addProperty(FOAF.firstName, user.getFirstName());
             userResource.addProperty(FOAF.lastName, user.getLastName());
@@ -70,7 +69,7 @@ public class UserRepositoryImpl implements UserRepository {
             userResource.addProperty(CRYS.password, user.getPassword());
             userResource.addProperty(CRYS.emailNotification, user.isEmailNotification() ? "true" : "false");
 
-            dataset.addNamedModel(USER_URI + id, userModel);
+            dataset.addNamedModel(USER_URI + "user-" + user.getUuid(), userModel);
 
             dataset.commit();
             dataset.end();
