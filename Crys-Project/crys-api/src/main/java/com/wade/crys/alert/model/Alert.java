@@ -7,22 +7,22 @@ public class Alert {
 
     private String id;
 
-    private Double alertValue;
+    private Double value;
 
     private Integer operator;
 
-    private User user;
+    private String userId;
 
-    private Coin coin;
+    private String coinId;
 
     public Alert() { }
 
-    public Alert(String id, Double alertValue, Integer operator, User user, Coin coin) {
+    public Alert(String id, Double value, Integer operator, String userId, String coinId) {
         this.id = id;
-        this.user = user;
-        this.alertValue = alertValue;
+        this.userId = userId;
+        this.value = value;
         this.operator = operator;
-        this.coin = coin;
+        this.coinId = coinId;
     }
 
     public String getId() {
@@ -33,20 +33,20 @@ public class Alert {
         this.id = id;
     }
 
-    public User getUserId() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserId(User user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public Double getAlertValue() {
-        return alertValue;
+    public Double getValue() {
+        return value;
     }
 
-    public void setAlertValue(Double alertValue) {
-        this.alertValue = alertValue;
+    public void setValue(Double value) {
+        this.value = value;
     }
 
     public Integer getOperator() {
@@ -57,11 +57,11 @@ public class Alert {
         this.operator = operator;
     }
 
-    public Coin getCoin() {
-        return coin;
+    public String getCoinId() {
+        return coinId;
     }
 
-    public void setCoin(Coin coin) {
-        this.coin = coin;
+    public void setCoin(String coinId) {
+        this.coinId = coinId;
     }
 }

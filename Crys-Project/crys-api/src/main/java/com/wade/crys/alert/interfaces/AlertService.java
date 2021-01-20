@@ -8,17 +8,10 @@ import java.util.Optional;
 
 public interface AlertService {
 
-    List<Alert> getUserAlerts(User user);
-
-    List<Alert> fireAlertsForUser(User user);
-
-    Optional<Alert> getAlertById(String id);
+    List<Alert> getUserAlerts(String userId);
 
     void addAlert(Alert alert);
 
     void deleteAlert(String id);
-
-    void updateAlert(String alertId, Double newAlertValue);
-
 
 }

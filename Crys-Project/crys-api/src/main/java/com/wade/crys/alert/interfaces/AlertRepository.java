@@ -9,14 +9,11 @@ public interface AlertRepository {
 
     List<Alert> getUserAlerts(String userId);
 
-    List<Alert> getAllAlertsByUser(String userId);
-
-    Optional<Alert> getAlertById(String id);
-
     void addAlert(Alert alert);
 
-    void deleteAlert(String id);
+    void deleteAlertById(String id);
 
-    void updateAlert(String alertId, Double newAlertValue);
+    void deleteAlertByUserIdAndCoinId(String userId, String coinId);
+
 
 }

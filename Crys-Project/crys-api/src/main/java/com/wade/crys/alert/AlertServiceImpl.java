@@ -20,52 +20,21 @@ public class AlertServiceImpl implements AlertService {
     @Autowired
     private AlertRepository alertRepository;
 
-    @Autowired
-    private KieContainer kieContainer;
-
     @Override
-    public List<Alert> getUserAlerts(User user) {
-        return alertRepository.getAllAlertsByUser(user.getUuid());
-    }
+    public List<Alert> getUserAlerts(String userId) {
 
-    @Override
-    public List<Alert> fireAlertsForUser(User user) {
-        // fire alerts with drools
-        List<Alert> alerts = new ArrayList<>();
-        List<Alert> userAlerts = alertRepository.getAllAlertsByUser(user.getUuid());
-
-        KieSession kieSession = kieContainer.newKieSession();
-        kieSession.setGlobal("alerts", alerts);
-        kieSession.setGlobal("helper", new AlertHelper());
-
-        for (Alert alert : userAlerts) {
-            kieSession.insert(alert);
-        }
-
-        int fired = kieSession.fireAllRules();
-        System.out.println("Fired rules: " + fired);
-
-        kieSession.destroy();
-        return alerts;
-    }
-
-    @Override
-    public Optional<Alert> getAlertById(String id) {
-        return alertRepository.getAlertById(id);
+        return alertRepository.getUserAlerts(userId);
     }
 
     @Override
     public void addAlert(Alert alert) {
+
         alertRepository.addAlert(alert);
     }
 
     @Override
     public void deleteAlert(String id) {
 
-    }
-
-    @Override
-    public void updateAlert(String alertId, Double newAlertValue) {
-
+        alertRepository.deleteAlertByUserIdAndCoinId(id, "bitcoin");
     }
 }
