@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CoinServiceImpl implements CoinService {
@@ -30,7 +32,7 @@ public class CoinServiceImpl implements CoinService {
     @Override
     public List<Coin> getAllCoinsOrderByRankAsc() {
 
-        return coinRepository.getAllCoinsOrderByRankAsc();
+        return coinRepository.getAllCoinsOrderByRankAsc().stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     @Override

@@ -191,7 +191,64 @@ public enum CrysOntologyEnum {
 					"DELETE DATA { \n " +
 					"	 <http://www.semanticweb.org/crys#user-%1s> crys:hasFavoriteCoin \"%2s\" ; \n" +
 					"}\n"
+	),
+
+	GET_USER_ALERTS_QRY(
+			"PREFIX crys: <http://www.semanticweb.org/crys#> \n" +
+					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+					"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
+					"\n" +
+					"SELECT * \n" +
+					"WHERE { \n" +
+					"?alert rdf:type crys:Alert ;\n" +
+					"      crys:value ?value ;\n" +
+					"      crys:operator ?operator ;\n" +
+					"      crys:belongsTo ?belongsTo ;\n" +
+					"      crys:forCoin ?forCoin ;\n" +
+					"FILTER (?belongsTo = \"%1s\")\n" +
+					" }\n"
+	),
+
+	DELETE_ALERT_BY_ID_QRY (
+			"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+					"PREFIX crys: <http://www.semanticweb.org/crys#> \n" +
+					"\n" +
+					"DELETE { \n " +
+					"	 <http://www.semanticweb.org/crys#alert-%1s> rdf:type crys:Alert ; \n" +
+					"	 												crys:value ?value ; \n" +
+					"	 												crys:operator ?operator ; \n" +
+					"	 												crys:belongsTo ?belongsTo ; \n" +
+					"	 												crys:forCoin ?forCoin ; \n" +
+					"} \n" +
+					"WHERE { \n" +
+					"	 <http://www.semanticweb.org/crys#alert-%2s> rdf:type crys:Alert ; \n" +
+					"	 												crys:value ?value ; \n" +
+					"	 												crys:operator ?operator ; \n" +
+					"	 												crys:belongsTo ?belongsTo ; \n" +
+					"	 												crys:forCoin ?forCoin ; \n" +
+					"}"
+	),
+
+	DELETE_ALERT_BY_USER_ID_AND_COIN_ID_QRY (
+			"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+					"PREFIX crys: <http://www.semanticweb.org/crys#> \n" +
+					"\n" +
+					"DELETE { \n " +
+					"	  ?alert rdf:type crys:Alert ; \n" +
+					"	  			crys:value ?value ; \n" +
+					"	 			crys:operator ?operator ; \n" +
+					"	 			crys:belongsTo \"%1s\" ; \n" +
+					"	 			crys:forCoin \"%2s\"; \n" +
+					"} \n" +
+					"WHERE { \n" +
+					"	  ?alert rdf:type crys:Alert ; \n" +
+					"	  			crys:value ?value ; \n" +
+					"	 			crys:operator ?operator ; \n" +
+					"	 			crys:belongsTo \"%3s\" ; \n" +
+					"	 			crys:forCoin \"%4s\" ; \n" +
+					"}\n"
 	);
+
 
 	private String code;
 

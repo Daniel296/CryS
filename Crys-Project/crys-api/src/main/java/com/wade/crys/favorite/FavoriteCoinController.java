@@ -18,12 +18,6 @@ import java.util.Optional;
 public class FavoriteCoinController {
 
     @Autowired
-        private UserService userService;
-
-    @Autowired
-        private CoinService coinService;
-
-    @Autowired
     private FavoriteCoinService favoriteCoinService;
 
     @GetMapping("/{user_id}")

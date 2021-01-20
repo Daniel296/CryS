@@ -5,7 +5,6 @@ import static com.wade.crys.utils.rdf.CRYS.CRYS_URI;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.QueryExecution;
@@ -16,6 +15,7 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.tdb.TDB;
 import org.apache.jena.update.UpdateAction;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateRequest;
@@ -71,14 +71,23 @@ public class FavoriteCoinRepositoryImpl implements FavoriteCoinRepository {
 
 		dataset.begin(ReadWrite.WRITE);
 
-		Model favoriteCoinModel = dataset.getDefaultModel();
+		try {
+			Model favoriteCoinModel = dataset.getDefaultModel();
 
-		Resource favoriteCoinResource = favoriteCoinModel.createResource(CRYS_URI + "user-" + userId);
-		favoriteCoinResource.addProperty(CRYS.hasFavoriteCoin, coinId);
+			Resource favoriteCoinResource = favoriteCoinModel.createResource(CRYS_URI + "user-" + userId);
+			favoriteCoinResource.addProperty(CRYS.hasFavoriteCoin, coinId);
 
-		dataset.addNamedModel(COIN_URI + userId, favoriteCoinModel);
-		dataset.commit();
-		dataset.end();
+			dataset.addNamedModel(COIN_URI + userId, favoriteCoinModel);
+
+			dataset.commit();
+		} catch (Exception e) {
+
+		} finally {
+
+			dataset.end();
+			TDB.sync(dataset);
+		}
+
 	}
 
 	@Override
@@ -94,16 +103,11 @@ public class FavoriteCoinRepositoryImpl implements FavoriteCoinRepository {
 			dataset.commit();
 		} catch (Exception e) {
 
+			dataset.abort();
 			System.out.println(e);
 		} finally {
 			dataset.end();
+			TDB.sync(dataset);
 		}
-
-		dataset.begin(ReadWrite.READ);
-		try(QueryExecution qExec = QueryExecutionFactory.create("SELECT ?s ?p ?o WHERE { ?s ?p ?o }", dataset)) {
-			ResultSet rs = qExec.execSelect() ;
-			ResultSetFormatter.out(rs) ;
-		}
-		dataset.end();
 	}
 }

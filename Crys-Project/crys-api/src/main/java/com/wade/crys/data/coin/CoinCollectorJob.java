@@ -4,6 +4,8 @@ import com.wade.crys.coin.interfaces.CoinService;
 import com.wade.crys.data.coin.interfaces.CoinCollector;
 import com.wade.crys.coin.interfaces.CoinRepository;
 import com.wade.crys.coin.model.Coin;
+
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -13,20 +15,25 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@DisallowConcurrentExecution
 public class CoinCollectorJob implements Job {
 
     private static boolean hasData = false;
 
     private CoinCollector coinCapAPI;
+
     private CoinService coinService;
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+
         try {
+
             coinCapAPI = (CoinCollector) jobExecutionContext.getScheduler().getContext().get("coinCapAPI");
             coinService = (CoinService) jobExecutionContext.getScheduler().getContext().get("coinService");
 
         } catch (SchedulerException e) {
+
             e.printStackTrace();
         }
 

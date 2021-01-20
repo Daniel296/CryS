@@ -1,14 +1,10 @@
 package com.wade.crys.alert;
 
 import static com.wade.crys.utils.rdf.CRYS.ALERT_URI;
-import static com.wade.crys.utils.rdf.CRYS.COIN_URI;
 import static com.wade.crys.utils.rdf.CRYS.CRYS_URI;
 
 import com.wade.crys.alert.interfaces.AlertRepository;
 import com.wade.crys.alert.model.Alert;
-import com.wade.crys.coin.model.Coin;
-import com.wade.crys.user.model.User;
-import com.wade.crys.utils.CoinsValues;
 import com.wade.crys.utils.rdf.CRYS;
 import com.wade.crys.utils.rdf.CrysOntologyEnum;
 
@@ -21,6 +17,7 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.tdb.TDB;
 import org.apache.jena.update.UpdateAction;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateRequest;
@@ -28,11 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class AlertRepositoryImpl implements AlertRepository {
@@ -97,6 +90,7 @@ public class AlertRepositoryImpl implements AlertRepository {
         } finally {
 
             dataset.end();
+            TDB.sync(dataset);
         }
     }
 
@@ -126,14 +120,9 @@ public class AlertRepositoryImpl implements AlertRepository {
 
             System.out.println(e);
         } finally {
-            dataset.end();
-        }
 
-        dataset.begin(ReadWrite.READ);
-        try(QueryExecution qExec = QueryExecutionFactory.create("SELECT ?s ?p ?o WHERE { ?s ?p ?o }", dataset)) {
-            ResultSet rs = qExec.execSelect() ;
-            ResultSetFormatter.out(rs) ;
+            dataset.end();
+            TDB.sync(dataset);
         }
-        dataset.end();
     }
 }

@@ -14,6 +14,7 @@ import org.apache.jena.query.ReadWrite;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.tdb.TDB;
 import org.apache.jena.update.UpdateAction;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateRequest;
@@ -43,6 +44,8 @@ public class CoinRepositoryImpl implements CoinRepository {
 
             coin = getCoinFromQuerySolution(rs.next());
         } catch (Exception e) {
+
+            dataset.abort();
             System.out.println(e);
         }
         finally {
@@ -66,7 +69,11 @@ public class CoinRepositoryImpl implements CoinRepository {
 
                 coins.add(getCoinFromQuerySolution(rs.next()));
             }
-        } finally {
+        } catch (Exception e) {
+
+            System.out.println(e);
+        }
+        finally {
             dataset.end();
         }
 
@@ -106,6 +113,8 @@ public class CoinRepositoryImpl implements CoinRepository {
 
         dataset.commit();
         dataset.end();
+
+        TDB.sync(dataset);
     }
 
     @Override
@@ -136,9 +145,12 @@ public class CoinRepositoryImpl implements CoinRepository {
             dataset.commit();
         } catch (Exception e) {
 
+            dataset.abort();
             System.out.println(e);
         } finally {
+
             dataset.end();
+            TDB.sync(dataset);
         }
     }
 

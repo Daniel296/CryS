@@ -4,9 +4,7 @@ import static com.wade.crys.utils.rdf.CRYS.CRYS_URI;
 import static com.wade.crys.utils.rdf.CRYS.USER_URI;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.QueryExecution;
@@ -17,7 +15,7 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.sparql.engine.QueryExecutionBase;
+import org.apache.jena.tdb.TDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -72,14 +70,15 @@ public class UserRepositoryImpl implements UserRepository {
             dataset.addNamedModel(USER_URI + "user-" + user.getUuid(), userModel);
 
             dataset.commit();
-            dataset.end();
         } catch (Exception e) {
 
-            System.out.println(e);
+            dataset.abort();
         }
         finally {
 
             dataset.end();
+
+            TDB.sync(dataset);
         }
     }
 

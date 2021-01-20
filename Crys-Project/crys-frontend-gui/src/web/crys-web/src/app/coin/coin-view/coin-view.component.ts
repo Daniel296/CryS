@@ -23,7 +23,7 @@ export class CoinViewComponent implements OnInit {
     this.initializeCoinsFromAPI();
 
     // set a loop to do requests
-    interval(10 * 1000).subscribe( x => {
+    interval(60 * 1000).subscribe( x => {
       this.initializeCoinsFromAPI();
     });
   }

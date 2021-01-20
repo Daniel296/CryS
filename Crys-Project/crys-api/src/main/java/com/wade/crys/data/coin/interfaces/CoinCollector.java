@@ -8,6 +8,4 @@ import java.util.List;
 public interface CoinCollector {
 
     List<Coin> getCoinsFromAPI(boolean withLogoURL);
-
-    List<CoinHistory> getCoinHistoryFromAPI(String id);
 }

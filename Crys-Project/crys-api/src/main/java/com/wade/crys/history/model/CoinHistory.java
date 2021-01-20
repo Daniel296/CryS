@@ -2,7 +2,7 @@ package com.wade.crys.history.model;
 
 public class CoinHistory {
 
-    private int id;
+    private String id;
 
     private String coinId;
 
@@ -10,10 +10,20 @@ public class CoinHistory {
 
     private Long timestamp;
 
-    public CoinHistory(String coinId, Double priceUSD, Long timestamp) {
+    public CoinHistory(String id, String coinId, Double priceUSD, Long timestamp) {
+
+        this.id = id;
         this.coinId = coinId;
         this.priceUSD = priceUSD;
         this.timestamp = timestamp;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCoinId() {
@@ -22,14 +32,6 @@ public class CoinHistory {
 
     public void setCoinId(String coinId) {
         this.coinId = coinId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Double getPriceUSD() {

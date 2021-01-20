@@ -4,9 +4,6 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 
-/**
- * @author doana
- */
 public class CRYS {
 
 	public static final String CRYS_URI = "http://www.semanticweb.org/crys#";
@@ -14,6 +11,8 @@ public class CRYS {
 
 	public static final String USER_URI = "http://www.semanticweb.org/crys/User";
 	public static final String COIN_URI = "http://www.semanticweb.org/crys/Coin";
+	public static final String ALERT_URI = "http://www.semanticweb.org/crys/Alert";
+	public static final String COIN_HISTORY_URI = "http://www.semanticweb.org/crys/CoinHistory";
 
 	private static final Model m = ModelFactory.createDefaultModel();
 
@@ -39,5 +38,14 @@ public class CRYS {
 
 	/* ===== Favorite coin properties ===== */
 	public static Property hasFavoriteCoin = m.createProperty(CRYS_URI + "hasFavoriteCoin");
+
+	/* ===== Alert properties ===== */
+	public static Property belongsTo = m.createProperty(CRYS_URI + "belongsTo");
+	public static Property value = m.createProperty(CRYS_URI + "value");
+	public static Property operator = m.createProperty(CRYS_URI + "operator");
+	public static Property forCoin = m.createProperty(CRYS_URI + "forCoin");
+
+	/* ===== Coin History properties ===== */
+	public static Property timestamp = m.createProperty(CRYS_URI + "timestamp");
 
 }

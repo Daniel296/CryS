@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.apache.maven.wagon.ConnectionException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,9 +23,8 @@ import com.wade.crys.history.model.CoinHistory;
 @Component
 public class CoinCapAPI implements CoinCollector {
 
-    private static final String IMAGE_NOUT_FOUND_URL = "http://viegenpharma.com/wp-content/uploads/2019/01/NoImageFound.jpg.png";
+    private static final String IMAGE_NOT_FOUND_URL = "http://viegenpharma.com/wp-content/uploads/2019/01/NoImageFound.jpg.png";
     private static final String BASE_COIN_DATA__URL = "https://api.coincap.io/v2";
-    private static final String BASE_COIN_HISTORY__URL = "https://api.coincap.io/v2";
     private static final String BASE_COIN_LOGO__URL = "https://s2.coinmarketcap.com";
 
     @Override
@@ -37,20 +37,13 @@ public class CoinCapAPI implements CoinCollector {
             Map<String, String> logoUrls = getLogoUrlForCoins();
 
             for (Coin coin : coins) {
+
                 coin.setLogoURL(logoUrls.get(coin.getName().toLowerCase()));
             }
         }
 
         return coins;
     }
-
-    @Override
-    public List<CoinHistory> getCoinHistoryFromAPI(String id) {
-        String coinHistoryAPIResponse = getResponseDataFromAPI(BASE_COIN_HISTORY__URL +  "/assets/" + id + "/history?interval=d1");
-
-        return getCoinHistory(coinHistoryAPIResponse, id);
-    }
-
     private Map<String, String> getLogoUrlForCoins() {
         // {"name": "Bitcoin", "symbol": "BTC", "rank": 1, "slug": "bitcoin", "tokens": ["Bitcoin", "bitcoin", "BTC"], "id": 1}
         String logoURLForCoinsResponseAPI = getResponseDataFromAPI(BASE_COIN_LOGO__URL + "/generated/search/quick_search.json");
@@ -81,9 +74,7 @@ public class CoinCapAPI implements CoinCollector {
                 sc.close();
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException ignored) { }
 
         return responseData.toString();
     }
@@ -114,12 +105,10 @@ public class CoinCapAPI implements CoinCollector {
                 Double changePercent24Hr =  Double.parseDouble((String) jsonCoin.get("changePercent24Hr"));
                 Double vwap24Hr =  jsonCoin.get("vwap24Hr") == null ? 0.0 : Double.parseDouble((String) jsonCoin.get("vwap24Hr"));
 
-                coins.add(new Coin(id, name, rank, symbol, IMAGE_NOUT_FOUND_URL, supply, maxSupply, marketCapUsd, volumeUsd24Hr, priceUsd, changePercent24Hr, vwap24Hr));
+                coins.add(new Coin(id, name, rank, symbol, IMAGE_NOT_FOUND_URL, supply, maxSupply, marketCapUsd, volumeUsd24Hr, priceUsd, changePercent24Hr, vwap24Hr));
             }
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        } catch (ParseException ignored) { }
 
         return coins;
     }
@@ -142,36 +131,8 @@ public class CoinCapAPI implements CoinCollector {
                 logoUrls.put(name.toLowerCase(), BASE_COIN_LOGO__URL + "/static/img/coins/32x32/" + id + ".png");
             }
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        } catch (ParseException ignored) { }
 
         return logoUrls;
-    }
-
-    private static List<CoinHistory> getCoinHistory(String responseData, String coidId) {
-        List<CoinHistory> coinHistories = new ArrayList<>();
-
-        //JSON parser object to parse read file
-        JSONParser jsonParser = new JSONParser();
-
-        try
-        {
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(responseData);
-            JSONArray data = (JSONArray) jsonObject.get("data");
-
-            for(Object historyData : data) {
-                JSONObject jsonCoin = (JSONObject) historyData;
-                String priceUSD = (String) jsonCoin.get("priceUsd");
-                Long time = (Long) jsonCoin.get("time");
-
-               coinHistories.add(new CoinHistory(coidId, Double.parseDouble(priceUSD), time));
-            }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return coinHistories;
     }
 }

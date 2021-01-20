@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {Coin} from "../../model/coin.model";
 import {environment} from "../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 

@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface CoinHistoryService {
 
-    List<CoinHistory> getCoinHistory(String id);
+    List<CoinHistory> getCoinHistory(String coinId);
+
+    void addCoinHistory(List<CoinHistory> coinHistory);
+
+    void deleteAllCoinHistory();
 
 }
