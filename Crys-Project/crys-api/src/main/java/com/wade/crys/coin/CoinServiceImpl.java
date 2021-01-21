@@ -32,7 +32,7 @@ public class CoinServiceImpl implements CoinService {
     @Override
     public List<Coin> getAllCoinsOrderByRankAsc() {
 
-        return coinRepository.getAllCoinsOrderByRankAsc().stream().filter(Objects::nonNull).collect(Collectors.toList());
+        return coinRepository.getAllCoinsOrderByRankAsc();
     }
 
     @Override

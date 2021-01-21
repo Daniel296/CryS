@@ -21,12 +21,17 @@ public class CoinHistoryController {
 
     @GetMapping("/{id}/history")
     public ResponseEntity getCoinHistory(@PathVariable String id) {
-        List<CoinHistory> coinHistories = coinHistoryService.getCoinHistory(id);
 
-        if(coinHistories != null) {
-            return new ResponseEntity<>(coinHistories, HttpStatus.OK);
+        try {
+
+            List<CoinHistory> coinHistory = coinHistoryService.getCoinHistory(id);
+
+            return new ResponseEntity<>(coinHistory, HttpStatus.OK);
+
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 }

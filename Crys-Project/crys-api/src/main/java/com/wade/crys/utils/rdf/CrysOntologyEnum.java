@@ -247,6 +247,39 @@ public enum CrysOntologyEnum {
 					"	 			crys:belongsTo \"%3s\" ; \n" +
 					"	 			crys:forCoin \"%4s\" ; \n" +
 					"}\n"
+	),
+
+	DELETE_ALL_COIN_HISTORY_QRY (
+			"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+					"PREFIX crys: <http://www.semanticweb.org/crys#> \n" +
+					"\n" +
+					"DELETE { \n" +
+					"	?history rdf:type crys:CoinHistory ; \n" +
+					"			crys:belongsTo ?belongsTo ; \n" +
+					"			crys:priceUsd ?priceUsd ; \n" +
+					"			crys:timestamp ?timestamp ; \n" +
+					"}\n" +
+					"WHERE { \n" +
+					"	?history rdf:type crys:CoinHistory ; \n" +
+					"			crys:belongsTo ?belongsTo ; \n" +
+					"			crys:priceUsd ?priceUsd ; \n" +
+					"			crys:timestamp ?timestamp ; \n" +
+					"}"
+	),
+
+	GET_HISTORY_FOR_COIN_QRY (
+			"PREFIX crys: <http://www.semanticweb.org/crys#> \n" +
+					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+					"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
+					"\n" +
+					"SELECT * \n" +
+					"WHERE { \n" +
+					"?history rdf:type crys:CoinHistory ;\n" +
+					"      crys:belongsTo ?belongsTo ;\n" +
+					"      crys:priceUsd ?priceUsd ;\n" +
+					"      crys:timestamp ?timestamp ;\n" +
+					"FILTER (?belongsTo = \"%1s\")\n" +
+					" }\n"
 	);
 
 

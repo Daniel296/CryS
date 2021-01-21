@@ -36,9 +36,11 @@ public class CoinHistoryCollectorJob implements Job {
             coinService = (CoinService) jobExecutionContext.getScheduler().getContext().get("coinService");
 
         } catch (SchedulerException e) {
+
             e.printStackTrace();
         }
 
+        coinHistoryService.deleteAllCoinHistory();
 
         List<Coin> coins = coinService.getAllCoinsOrderByRankAsc();
         for(Coin coin : coins) {
