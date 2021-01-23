@@ -10,6 +10,6 @@ public interface CoinHistoryService {
 
     void addCoinHistory(List<CoinHistory> coinHistory);
 
-    void deleteAllCoinHistory();
+    void deleteHistoryForCoin(String coinId);
 
 }

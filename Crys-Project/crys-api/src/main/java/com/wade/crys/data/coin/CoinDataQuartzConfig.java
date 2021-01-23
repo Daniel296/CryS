@@ -21,15 +21,18 @@ public class CoinDataQuartzConfig {
 
     @Bean
     public Scheduler scheduler() throws SchedulerException {
+
         Scheduler scheduler =  new StdSchedulerFactory().getScheduler();
         scheduler.scheduleJob(jobDetail(), trigger());
         scheduler.getContext().put("coinCapAPI", coinCapAPI);
         scheduler.getContext().put("coinService", coinService);
         scheduler.start();
+
         return scheduler;
     }
 
     private JobDetail jobDetail() {
+
         return JobBuilder.newJob().ofType(CoinCollectorJob.class)
                 .withIdentity("Quartz_Coin_Data_Collector_Job")
                 .withDescription("Invoke Coin Collector Job service...")
@@ -37,6 +40,7 @@ public class CoinDataQuartzConfig {
     }
 
     private Trigger trigger() {
+
         return TriggerBuilder.newTrigger()
                 .withIdentity("Quartz_Coin_Data_Collector_Job")
                 .startNow()

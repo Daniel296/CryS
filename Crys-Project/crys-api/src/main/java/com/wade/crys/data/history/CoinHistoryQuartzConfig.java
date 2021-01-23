@@ -36,7 +36,7 @@ public class CoinHistoryQuartzConfig {
         scheduler.getContext().put("coinHistoryCollector", coinHistoryCollector);
         scheduler.getContext().put("coinHistoryService", coinHistoryService);
         scheduler.getContext().put("coinService", coinService);
-        scheduler.startDelayed(25);
+        scheduler.startDelayed(35);
         scheduler.start();
 
         return scheduler;

@@ -24,19 +24,21 @@ public class CoinHistoryServiceImp implements CoinHistoryService {
     @Override
     public void addCoinHistory(List<CoinHistory> coinHistory) {
 
+        int i = 0;
         for(CoinHistory history : coinHistory) {
 
             coinHistoryRepository.addCoinHistory(history);
+
+            System.out.println(i++ + "---> Finished to insert history for: " + (coinHistory.size() != 0 ? coinHistory.get(0).getCoinId() : "----"));
         }
 
-        System.out.println("---> Finished to insert history for: " + (coinHistory.size() != 0 ? coinHistory.get(0).getCoinId() : "----"));
-
+//        System.out.println("---> Finished to insert history for: " + (coinHistory.size() != 0 ? coinHistory.get(0).getCoinId() : "----"));
     }
 
     @Override
-    public void deleteAllCoinHistory() {
+    public void deleteHistoryForCoin(String coinId) {
 
-        coinHistoryRepository.deleteAllCoinHistory();
+        coinHistoryRepository.deleteHistoryForCoin(coinId);
     }
 
 }

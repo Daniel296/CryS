@@ -1,9 +1,8 @@
 package com.wade.crys.history.interfaces;
 
-import com.wade.crys.coin.model.Coin;
-import com.wade.crys.history.model.CoinHistory;
-
 import java.util.List;
+
+import com.wade.crys.history.model.CoinHistory;
 
 public interface CoinHistoryRepository {
 
@@ -11,5 +10,5 @@ public interface CoinHistoryRepository {
 
     void addCoinHistory(CoinHistory coinHistory);
 
-    void deleteAllCoinHistory();
+    void deleteHistoryForCoin(String coinId);
 }

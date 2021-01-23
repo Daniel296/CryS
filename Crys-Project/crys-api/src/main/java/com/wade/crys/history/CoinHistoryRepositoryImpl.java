@@ -45,7 +45,8 @@ public class CoinHistoryRepositoryImpl implements CoinHistoryRepository {
 
                 QuerySolution qs = rs.next();
 
-                String id = qs.get("user").toString().substring(qs.get("user").toString().indexOf("-") + 1);
+                String id = qs.get("history").toString().substring(qs.get("history").toString().indexOf("#") + 1)
+                        .replace("coin-history-", "");
                 Double priceUsd = Double.parseDouble(qs.get("priceUsd").toString());
                 Long timestamp = Long.parseLong(qs.get("timestamp").toString());
 
@@ -92,13 +93,13 @@ public class CoinHistoryRepositoryImpl implements CoinHistoryRepository {
     }
 
     @Override
-    public void deleteAllCoinHistory() {
+    public void deleteHistoryForCoin(String coinId) {
 
         dataset.begin(ReadWrite.WRITE);
 
         try {
 
-            UpdateRequest req = UpdateFactory.create(CrysOntologyEnum.DELETE_ALL_COIN_HISTORY_QRY.getCode());
+            UpdateRequest req = UpdateFactory.create(String.format(CrysOntologyEnum.DELETE_HISTORY_FOR_COIN_QRY.getCode(), coinId));
             UpdateAction.execute(req, dataset);
 
             dataset.commit();

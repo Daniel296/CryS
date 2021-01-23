@@ -1,6 +1,7 @@
 package com.wade.crys.data.history;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
@@ -40,12 +41,13 @@ public class CoinHistoryCollectorJob implements Job {
             e.printStackTrace();
         }
 
-        coinHistoryService.deleteAllCoinHistory();
-
         List<Coin> coins = coinService.getAllCoinsOrderByRankAsc();
-        for(Coin coin : coins) {
+//        List<Coin> coins = coinService.getAllCoinsOrderByRankAsc().stream().filter(coin -> coin.getId().equals("bitcoin")).collect(Collectors.toList());
+        for(int i = 1; i < coins.size(); i++) {
 
-            List<CoinHistory> coinHistory = coinHistoryCollector.getCoinsHistoryFromAPI(coin.getId());
+            List<CoinHistory> coinHistory = coinHistoryCollector.getCoinsHistoryFromAPI(coins.get(i).getId());
+
+            coinHistoryService.deleteHistoryForCoin(coins.get(i).getId());
             coinHistoryService.addCoinHistory(coinHistory);
         }
 

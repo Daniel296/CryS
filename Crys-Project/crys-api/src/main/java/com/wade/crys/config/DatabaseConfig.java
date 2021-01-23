@@ -3,8 +3,10 @@ package com.wade.crys.config;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.tdb.TDBFactory;
 import org.apache.jena.tdb.TDBLoader;
+import org.apache.jena.tdb.base.block.FileMode;
 import org.apache.jena.tdb.base.file.Location;
 import org.apache.jena.tdb.setup.StoreParams;
 import org.apache.jena.tdb.setup.StoreParamsBuilder;
@@ -47,12 +49,14 @@ public class DatabaseConfig {
 	private StoreParams getStoreParams() {
 
 		return StoreParamsBuilder.create()
-				.blockSize(8192)
-				.blockReadCacheSize(10000)
-				.blockWriteCacheSize(4000)
-				.node2NodeIdCacheSize(10000)
-				.nodeId2NodeCacheSize(50000)
-				.nodeMissCacheSize(100)
+				.fileMode(FileMode.direct)
+//				.blockSize(8192)
+				.blockSize(100000)
+				.blockReadCacheSize(100000)
+				.blockWriteCacheSize(40000)
+				.node2NodeIdCacheSize(100000)
+				.nodeId2NodeCacheSize(500000)
+				.nodeMissCacheSize(1000)
 				.indexNode2Id("node2id")
 				.indexId2Node("nodes")
 				.build();

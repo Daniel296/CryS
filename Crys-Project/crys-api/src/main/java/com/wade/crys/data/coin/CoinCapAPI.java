@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import org.apache.maven.wagon.ConnectionException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import com.wade.crys.coin.model.Coin;
 import com.wade.crys.data.coin.interfaces.CoinCollector;
-import com.wade.crys.history.model.CoinHistory;
 
 @Component
 public class CoinCapAPI implements CoinCollector {

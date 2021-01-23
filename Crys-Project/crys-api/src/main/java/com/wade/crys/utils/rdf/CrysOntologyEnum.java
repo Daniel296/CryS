@@ -249,19 +249,19 @@ public enum CrysOntologyEnum {
 					"}\n"
 	),
 
-	DELETE_ALL_COIN_HISTORY_QRY (
+	DELETE_HISTORY_FOR_COIN_QRY (
 			"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
 					"PREFIX crys: <http://www.semanticweb.org/crys#> \n" +
 					"\n" +
 					"DELETE { \n" +
 					"	?history rdf:type crys:CoinHistory ; \n" +
-					"			crys:belongsTo ?belongsTo ; \n" +
+					"			crys:belongsTo \"%1%s\" ; \n" +
 					"			crys:priceUsd ?priceUsd ; \n" +
 					"			crys:timestamp ?timestamp ; \n" +
 					"}\n" +
 					"WHERE { \n" +
 					"	?history rdf:type crys:CoinHistory ; \n" +
-					"			crys:belongsTo ?belongsTo ; \n" +
+					"			crys:belongsTo \"%2s\" ; \n" +
 					"			crys:priceUsd ?priceUsd ; \n" +
 					"			crys:timestamp ?timestamp ; \n" +
 					"}"
@@ -270,7 +270,6 @@ public enum CrysOntologyEnum {
 	GET_HISTORY_FOR_COIN_QRY (
 			"PREFIX crys: <http://www.semanticweb.org/crys#> \n" +
 					"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
-					"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
 					"\n" +
 					"SELECT * \n" +
 					"WHERE { \n" +
