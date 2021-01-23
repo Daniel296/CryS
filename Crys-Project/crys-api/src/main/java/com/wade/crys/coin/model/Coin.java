@@ -28,7 +28,13 @@ public class Coin {
 
     public Coin() { }
 
+    public Coin(String coinId) {
+
+        this.id = coinId;
+    }
+
     public Coin(String id, String name, Integer rank, String symbol, String logoURL, Double supply, Double maxSupply, Double marketCapUsd, Double volumeUsd24hr, Double priceUsd, Double changePercentage24hr, Double vwap24hr) {
+
         this.id = id;
         this.name = name;
         this.rank = rank;

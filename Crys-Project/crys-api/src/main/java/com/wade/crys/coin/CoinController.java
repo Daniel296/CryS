@@ -38,6 +38,7 @@ public class CoinController {
         Optional<Coin> optional = coinService.getCoinById(id);
 
         if(optional.isPresent()) {
+
             return new ResponseEntity<>(optional.get(), HttpStatus.OK);
         }
 

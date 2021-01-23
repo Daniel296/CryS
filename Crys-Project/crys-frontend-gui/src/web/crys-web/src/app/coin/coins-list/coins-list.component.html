@@ -26,7 +26,7 @@
             <td *ngIf="isLogged == true" class="coin-actions">
 
               <div *ngIf="coinListType === 'favorite'">
-                <button class="btn btn-xs btn-primary"><i class="fa fa-bell"></i></button>
+                <button class="btn btn-xs btn-primary" (click)="openAlertDialog(coin)"><i class="fa fa-bell"></i></button>
                 <button class="btn btn-xs btn-danger" (click)="removeCoin(coin.id)"><i class="fa fa-trash"></i></button>
               </div>
 

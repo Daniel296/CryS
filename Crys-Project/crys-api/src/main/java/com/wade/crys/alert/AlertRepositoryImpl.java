@@ -5,6 +5,7 @@ import static com.wade.crys.utils.rdf.CRYS.CRYS_URI;
 
 import com.wade.crys.alert.interfaces.AlertRepository;
 import com.wade.crys.alert.model.Alert;
+import com.wade.crys.coin.model.Coin;
 import com.wade.crys.utils.rdf.CRYS;
 import com.wade.crys.utils.rdf.CrysOntologyEnum;
 
@@ -52,7 +53,7 @@ public class AlertRepositoryImpl implements AlertRepository {
                 Integer operator = Integer.parseInt(qs.get("operator").toString());
                 String coinId = qs.get("forCoin").toString();
 
-                alerts.add(new Alert(id, value, operator, userId, coinId));
+                alerts.add(new Alert(id, value, operator, userId, new Coin(coinId)));
             }
         } catch (Exception e) {
 
@@ -77,7 +78,7 @@ public class AlertRepositoryImpl implements AlertRepository {
             Resource coinResource = coinModel.createResource(CRYS_URI + alert.getId());
             coinResource.addProperty(CRYS.type, coinModel.createResource(CRYS_URI + "Alert"));
             coinResource.addProperty(CRYS.belongsTo, alert.getUserId());
-            coinResource.addProperty(CRYS.forCoin, alert.getCoinId());
+            coinResource.addProperty(CRYS.forCoin, alert.getCoin().getId());
             coinResource.addProperty(CRYS.value, alert.getValue().toString());
             coinResource.addProperty(CRYS.operator, alert.getOperator().toString());
 
@@ -86,6 +87,7 @@ public class AlertRepositoryImpl implements AlertRepository {
             dataset.commit();
         } catch (Exception e) {
 
+            dataset.abort();
             System.out.println(e);
         } finally {
 

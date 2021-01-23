@@ -13,16 +13,16 @@ public class Alert {
 
     private String userId;
 
-    private String coinId;
+    private Coin coin;
 
     public Alert() { }
 
-    public Alert(String id, Double value, Integer operator, String userId, String coinId) {
+    public Alert(String id, Double value, Integer operator, String userId, Coin coin) {
         this.id = id;
         this.userId = userId;
         this.value = value;
         this.operator = operator;
-        this.coinId = coinId;
+        this.coin = coin;
     }
 
     public String getId() {
@@ -57,11 +57,11 @@ public class Alert {
         this.operator = operator;
     }
 
-    public String getCoinId() {
-        return coinId;
+    public Coin getCoin() {
+        return coin;
     }
 
-    public void setCoin(String coinId) {
-        this.coinId = coinId;
+    public void setCoin(Coin coin) {
+        this.coin = coin;
     }
 }

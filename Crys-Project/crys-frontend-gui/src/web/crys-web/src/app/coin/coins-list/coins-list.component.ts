@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Coin} from "../../model/coin.model";
+import {MatDialog} from '@angular/material/dialog';
+import {AlertDialogComponent} from "../../alert/alert-dialog/alert-dialog.component";
 
 @Component({
   selector: 'app-coins-list',
@@ -15,7 +17,7 @@ export class CoinsListComponent implements OnInit {
   @Output() removeCoinFromFavoriteEmitter = new EventEmitter();
   @Output() addCoinToFavoriteEmitter = new EventEmitter();
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -28,4 +30,17 @@ export class CoinsListComponent implements OnInit {
     this.addCoinToFavoriteEmitter.emit(coinId);
   }
 
+  openAlertDialog(coin: Coin) {
+
+    const dialogRef = this.dialog.open(AlertDialogComponent, {
+      width: '300px',
+      data: coin
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    //   this.animal = result;
+    // });
+
+  }
 }

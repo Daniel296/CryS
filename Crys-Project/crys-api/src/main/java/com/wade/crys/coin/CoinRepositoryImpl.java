@@ -158,7 +158,7 @@ public class CoinRepositoryImpl implements CoinRepository {
 
         try {
 
-            String id = qs.get("id").toString();
+             String id = qs.get("id").toString();
             String name = qs.get("name").toString();
             Integer rank = Integer.parseInt(qs.get("rank").toString().trim());
             String symbol = qs.get("symbol").toString();

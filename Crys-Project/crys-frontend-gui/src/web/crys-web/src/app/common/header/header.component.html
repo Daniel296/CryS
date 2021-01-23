@@ -18,6 +18,7 @@
               <li class="has-sub" *ngIf="currentUser"><a><i class="fa fa-user" aria-hidden="true"></i> {{ currentUser.firstName }} {{ currentUser.lastName }}</a>
                 <ul>
                   <li><a routerLink="account">Account</a></li>
+                  <li><a routerLink="alerts">Your Alerts</a></li>
                   <li><a style="cursor: pointer" (click)="logout()">Logout</a></li>
                 </ul>
               </li>

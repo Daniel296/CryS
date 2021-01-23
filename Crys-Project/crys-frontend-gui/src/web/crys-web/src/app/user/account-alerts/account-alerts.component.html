@@ -1,0 +1,30 @@
+<!-- page-header -->
+<div class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="auth-pages-header">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.page-header-->
+
+<div class="heading-part text-center">
+  <h2 class="main_title mt_100 mb_20 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">Your cryptocurrency alerts</h2>
+</div><br>
+
+<div class="row row-70">
+  <div class="col-sm-4 mb-4"  *ngFor="let alert of alerts">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title"><img [src]="alert.coin.logoURL" alt="" class="coin-logo"> {{ alert.coin.name }} </h2><br>
+        <p class="card-text"><b>Current price:</b> ${{alert.coin.priceUsd | number: '.2'}} </p>
+        <p class="card-text"><b>Alert price:</b> ${{alert.value | number: '.2'}}</p>
+        <button class="btn btn-xs btn-warning" (click)="removeAlert(alert.id)">Remove alert</button>
+      </div>
+    </div>
+  </div>
+</div>
+
