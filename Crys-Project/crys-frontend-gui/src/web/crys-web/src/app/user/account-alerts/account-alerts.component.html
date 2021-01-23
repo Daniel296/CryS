@@ -16,6 +16,9 @@
 </div><br>
 
 <div class="row row-70">
+  <div *ngIf="alerts.length === 0">
+    <h3>You do not have alerts. Please go to coins <a routerLink="coins">page</a> and add alerts</h3><br><br>
+  </div>
   <div class="col-sm-4 mb-4"  *ngFor="let alert of alerts">
     <div class="card">
       <div class="card-body">

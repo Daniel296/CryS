@@ -17,6 +17,8 @@ export class AccountAlertsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.alerts = [] as Alert[];
+
     this.alertService.getAlertsForUser(this.authService.getUserId()).subscribe( data => {
       this.alerts = data as Alert[];
     })

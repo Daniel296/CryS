@@ -1,0 +1,12 @@
+<h1 mat-dialog-title><img [src]="data.logoURL" alt="" class="coin-logo"> Add alert for {{ data.name }}</h1>
+<div mat-dialog-content>
+  <p>Current price: ${{ data.priceUsd | number: '.2' }}</p>
+  <mat-form-field>
+    <mat-label></mat-label>
+    <input matInput placeholder="Alert value" [(ngModel)]="alertValue" (keypress)="numberOnly()">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [disabled]="!shouldBeDisabled" (click)="addAlertForUser()">Add</button>
+</div>
