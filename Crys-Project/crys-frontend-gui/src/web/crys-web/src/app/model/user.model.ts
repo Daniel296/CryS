@@ -2,7 +2,7 @@ import { Coin } from './coin.model';
 import { Alert } from "./alert.model";
 
 export interface User {
-   uuid: string;
+  uuid: string;
   firstName: string;
   lastName: string;
   email: string;

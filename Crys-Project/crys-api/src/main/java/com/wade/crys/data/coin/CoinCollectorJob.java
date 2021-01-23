@@ -12,6 +12,7 @@ import org.quartz.JobExecutionException;
 import org.quartz.SchedulerException;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
