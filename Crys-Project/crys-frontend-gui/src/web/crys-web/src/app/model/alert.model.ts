@@ -1,10 +1,9 @@
 import {Coin} from "./coin.model";
-import {User} from "./user.model";
 
 export interface Alert {
   id: string;
-  alertValue: number;
+  value: number;
   operator: number;
-  user: User;
+  userId: string;
   coin: Coin;
 }
