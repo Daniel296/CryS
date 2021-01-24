@@ -1,5 +1,6 @@
 package com.wade.crys.user;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,6 +30,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setUuid(UUID.randomUUID().toString());
 
         userRepository.addUser(user);
+    }
+
+    @Override
+    public List<User> getUsersWithEmailNotification() {
+
+        return userRepository.getUsersWithEmailNotification();
     }
 
     @Override

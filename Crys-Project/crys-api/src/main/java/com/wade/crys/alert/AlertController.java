@@ -27,6 +27,12 @@ public class AlertController {
         return new ResponseEntity<>(alertService.getUserAlerts(userId), HttpStatus.OK);
     }
 
+    @GetMapping("/trigger/{user_id}")
+    public ResponseEntity<List<Alert>> triggerUserAlerts(@PathVariable("user_id") String userId) {
+
+        return new ResponseEntity<>(alertService.getUserAlertsThatShouldBeTriggered(userId), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity addAlert(@RequestBody Alert alert) {
 

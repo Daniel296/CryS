@@ -22,6 +22,10 @@ export class AlertService {
     return this.http.get(this.baseUrl + "api/alert/" + user_id, { headers: this.headers });
   }
 
+  getUserAlertsThatShouldBeTriggered(user_id) {
+    return this.http.get(this.baseUrl + "api/alert/trigger" + user_id, { headers: this.headers });
+  }
+
   addAlert(alert: Alert) {
     this.http.post(this.baseUrl + "api/alert", alert, { headers: this.headers })
       .subscribe();

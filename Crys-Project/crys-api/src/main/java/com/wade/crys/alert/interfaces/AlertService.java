@@ -10,6 +10,8 @@ public interface AlertService {
 
     List<Alert> getUserAlerts(String userId);
 
+    List<Alert> getUserAlertsThatShouldBeTriggered(String userId);
+
     void addAlert(Alert alert);
 
     void deleteAlert(String id);

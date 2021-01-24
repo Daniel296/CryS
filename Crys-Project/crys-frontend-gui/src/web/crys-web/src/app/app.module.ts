@@ -14,7 +14,7 @@ import { NotificationPanelComponent } from './notification/notification-panel/no
 import { NotificationItemComponent } from './notification/notification-item/notification-item.component';
 import { MatButtonModule } from '@angular/material/button';
 import { AlertDialogComponent } from './alert/alert-dialog/alert-dialog.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {A11yModule} from '@angular/cdk/a11y';
@@ -58,6 +58,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
+import {AngularBootstrapToastsService, AngularBootstrapToastsModule} from "angular-bootstrap-toasts";
 
 @NgModule({
   declarations: [
@@ -78,7 +79,10 @@ import {OverlayModule} from '@angular/cdk/overlay';
     MatButtonModule,
     FormsModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AngularBootstrapToastsModule
   ],
   exports: [
     A11yModule,
@@ -125,6 +129,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
     OverlayModule,
     PortalModule,
     ScrollingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AngularBootstrapToastsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

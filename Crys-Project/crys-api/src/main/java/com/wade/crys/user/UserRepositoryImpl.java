@@ -4,6 +4,7 @@ import static com.wade.crys.utils.rdf.CRYS.CRYS_URI;
 import static com.wade.crys.utils.rdf.CRYS.USER_URI;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.jena.query.Dataset;
@@ -48,6 +49,39 @@ public class UserRepositoryImpl implements UserRepository {
         dataset.end();
 
         return Optional.ofNullable(getUserFromQueryResult(String.format(CrysOntologyEnum.GET_USER_BY_EMAIL_QRY.getCode(), email)));
+    }
+
+    @Override
+    public List<User> getUsersWithEmailNotification() {
+
+        List<User> users = new ArrayList<>();
+
+        dataset.begin(ReadWrite.READ);
+
+        try{
+            ResultSet rs = QueryExecutionFactory.create(CrysOntologyEnum.GET_USERS_WITH_EMAIL_NOTIFICATION_QRY.getCode(), dataset).execSelect();
+
+            while(rs.hasNext()) {
+
+                QuerySolution qs = rs.next();
+
+                String uuid = qs.get("user").toString().substring(qs.get("user").toString().indexOf("-") + 1);
+                String firstName = qs.get("firstName").toString();
+                String lastName = qs.get("lastName").toString();
+                String email = qs.get("email").toString();
+                String password = qs.get("password").toString();
+                String telephone = qs.get("telephone").toString();
+                boolean emailNotification = qs.get("emailNotification").toString().equals("true");
+
+                users.add(new User(uuid, firstName, lastName, email, password, telephone, emailNotification, new ArrayList<>(), new ArrayList<>()));
+            }
+
+        } finally {
+
+            dataset.end();
+        }
+        
+        return users;
     }
 
     @Override

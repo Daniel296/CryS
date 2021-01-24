@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wade.crys.alert.email.AlertEmailSender;
 import com.wade.crys.alert.interfaces.AlertRepository;
 import com.wade.crys.alert.interfaces.AlertService;
 import com.wade.crys.alert.model.Alert;
 import com.wade.crys.coin.interfaces.CoinService;
 import com.wade.crys.coin.model.Coin;
+import com.wade.crys.utils.AlertHelper;
 
 @Service
 public class AlertServiceImpl implements AlertService {
@@ -31,18 +33,29 @@ public class AlertServiceImpl implements AlertService {
     }
 
     @Override
+    public List<Alert> getUserAlertsThatShouldBeTriggered(String userId) {
+
+        List<Alert> userAlerts = getUserAlerts(userId);
+
+        int i = 0;
+        while(i < userAlerts.size()) {
+
+            if(AlertHelper.alertShouldBeTriggered(userAlerts.get(i))) {
+
+               i++;
+            } else {
+
+                userAlerts.remove(i);
+            }
+        }
+
+        return userAlerts;
+    }
+
+    @Override
     public void addAlert(Alert alert) {
 
-        if(alert.getValue() > alert.getCoin().getPriceUsd()) {
-
-            alert.setOperator(1);
-        } else if(alert.getValue() < alert.getCoin().getPriceUsd()) {
-
-            alert.setOperator(-1);
-        } else {
-
-            alert.setOperator(0);
-        }
+       alert.setOperator(AlertHelper.getOperator(alert.getValue(), alert.getCoin().getPriceUsd()));
 
         alertRepository.addAlert(alert);
     }
@@ -52,4 +65,5 @@ public class AlertServiceImpl implements AlertService {
 
         alertRepository.deleteAlertById(id);
     }
+
 }

@@ -2,7 +2,6 @@ package com.wade.crys.data.coin;
 
 import com.wade.crys.coin.interfaces.CoinService;
 import com.wade.crys.data.coin.interfaces.CoinCollector;
-import com.wade.crys.coin.interfaces.CoinRepository;
 import com.wade.crys.coin.model.Coin;
 
 import org.quartz.DisallowConcurrentExecution;
