@@ -16,6 +16,7 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.riot.Lang;
 import org.apache.jena.tdb.TDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -86,7 +87,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void addUser(User user) {
-
         dataset.begin(ReadWrite.WRITE);
 
         try {
@@ -105,13 +105,10 @@ public class UserRepositoryImpl implements UserRepository {
 
             dataset.commit();
         } catch (Exception e) {
-
             dataset.abort();
         }
         finally {
-
             dataset.end();
-
             TDB.sync(dataset);
         }
     }

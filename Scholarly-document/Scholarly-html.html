@@ -4,6 +4,7 @@
     <title>CRYS - Cryptocurrency Smart Manager</title>
     <link rel="stylesheet" href="./css/scholarly.css">
     <link rel="stylesheet" href="./css/prism-coy.css">
+    <link rel="stylesheet" href="./css/style.css">
     <script src="./js/prism.js.descărcare" defer=""></script>
   </head>
   <body prefix="schema: http://schema.org/ xsd: http://www.w3.org/2001/XMLSchema# sa: https://ns.science.ai/">
@@ -80,10 +81,16 @@
 				<li>Real time market data about cryptocurrencies</li>
 				<li>Cryptocurrency evolution history</li>
 				<li>User personalized alerts for coins of interest</li>
-				<li>Quick view of favourite user coins</li>
-				<li>Latest news regarding coins and market</li>
+        <li>Quick view of favourite user coins</li>
+        <li>Quick view of user alerts set for different cryptocurrencies</li>
 			</ul>
 		</p>
+
+    <p>
+      Also, it is meant to offer a scalable solution of obtaining and analysing cryptocurrency in real time. Our solution will collect 
+  data from two APIs and by transforming the data into a common format(RDF) it will be able to present to the client the information 
+  exposed by a well documented RESTful API.
+    </p>
 
 		<br>
         <h1>Technologies</h1><hr>
@@ -95,10 +102,12 @@
               <ul>
                 <li><a href="https://www.oracle.com/java/index.html">Java</a> - a general-purpose computer programming language that is concurrent, class-based, object-oriented and specifically designed to have as few implementation dependencies as possible.</li>
                 <li><a href="https://spring.io/">Spring Boot</a> - makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".</li>
-                <li><a href="https://jena.apache.org/documentation/serving_data/">Apache Jena, Fuseki</a> - a free and open source Java framework for building Semantic Web
-                  and Linked Data applications. It provides the possibility to use Fuseki server in order to query the RDF data, over the HTTP.</li>
                 <li><a href="https://spring.io/projects/spring-security">Spring Security </a> - Spring Security is a powerful and highly customizable authentication and access-control framework.
-				It is the de-facto standard for securing Spring-based applications.</li>
+        It is the de-facto standard for securing Spring-based applications.</li>
+                <li><a href="http://www.quartz-scheduler.org/overview/">Java Quartz</a> - can be used to create simple or complex schedules for executing tens, hundreds, or even tens-of-thousands of jobs; jobs whose tasks are defined as standard Java components that may execute virtually anything you may program them to do. </li>
+                <li><a href="https://javaee.github.io/javamail/">JavaX Mail</a> - The JavaMail API provides a platform-independent and protocol-independent framework to build mail and messaging applications.</li>
+                <li><a href="https://jena.apache.org/documentation/serving_data/">Apache Jena</a> - a free and open source Java framework for building Semantic Web and Linked Data applications. </li>
+                <li><a href="https://www.w3.org/TR/rdf-sparql-query/">SPARQL</a> - is a query language for RDF, it can be used to express queries across diverse data sources, whether the data is stored natively as RDF or viewed as RDF via middleware</li>
               </ul>
             </li>
             <li>
@@ -115,13 +124,7 @@
         <p>
 
         </p><br>
-        <h1>Our proposal</h1><hr>
-        <p>
-          Our proposal is meant to offer a scalable solution of obtaining and analysing cryptocurrency in real time. Our solution will collect 
-		  data from two APIs and by transforming the data into a common format(RDF) it will be able to present to the client the information 
-		  exposed by a well documented RESTful API.
-        <p></p>
-		<br>
+        
           <h1>Architecture</h1><hr>
           <p>
             Our real time stream processing architecture
@@ -150,72 +153,394 @@
 			After we have the relevant information about cryptocurrencies we transform it into RDF format and we query it for providing 
 			the functionalities of our application. 
 		  </p>
-		  
-		  <p>
-			We store our tweets data using Apache Jena Fuseki which is a SPARQL server. 
-			It provides REST-style SPARQL Query, and SPARQL Update using the SPARQL protocol over HTTP. 
-			We use it to store RDF triples and to retrieve information using SPARQL queries.
-		  </p>
-		  <p></p>
-		  
-		  <p>
-			The client application will be created using Angular in order to expose all functionalities of our solution.
-		  </p>
-		  <br>
-          <h1>REST api</h1><hr>
+		
+      <p>The application at the architectural level works very simply using the client-server paradigm.</p>
+      <p>At the front-end level, several Angular components are used that render HTML pages to dynamically display information about cryptocurrencies.</p>
+      <p>On the back-end side, a REST API is created using Spring Boot. Each request sent by the client reaches the server controllers and is processed according to the details it provides. Here we find a multi-layer architecture:</p>
+      <ul>
+        <li><b>Controller</b> - takes the request from the client together with the payload and sends the data to the next layer</li>
+        <li><b>Service</b> - retrieves data from the controller or Quartz jobs to process the data and then send it to the repository</li>
+        <li><b>Repository</b> - retrieves data from the service and performs CRUD operations on RDF database.</li>
+      </ul>
+
+      <p>Data collection involves defining a <b>Java Quartz</b> scheduler that is triggered every 30 seconds to collect cryptocurrency data. Once brought from the external API (CoinCap)
+        these are entered in the RDF from where they will be retrieved later using <b>SPARQL</b> queries to send to the client.</p>
+      
+      <p> To collect data about the currency history, the same steps are used, but the scheduler is activated every 60 minutes.</p>
+        <p>Another Quartz scheduler handles sending emails to users who have set alarms. This scheduler is triggered every 30 seconds and acts in 3 simple steps:
+
+        <ol>
+          <li>Retrieves from the database only users who have email notifications enabled</li>
+          <li>For each user takes over the set alarms</li>
+          <li>If the alarm is valid (ie meets the conditions) then an email is sent to the user</li>
+          <ul>
+            <li>Remove the alert from database</li>
+          </ul>
+        </ol>
+      </p>
+
+      <p>When the user wants to create an alarm, he is asked to enter a value that represents the price of the currency when he wants to receive notification for that currency.
+        On the back-end side, in service, an "operator" is established for the alarm. It can receive the following values ​​depending on the value set by the user and the current price of the currency:
+        <ul>
+          <li><b>-1</b>: if the value of the alarm is <b>less</b> than the price of the coin</li>
+          <li><b>&nbsp; 0</b>: if the value of the alarm is <b>equal</b> to the price of the coin</li>
+          <li><b>&nbsp; 1</b>: if the value of the alarm is <b>higher</b> than the price of the coin</li>
+        </ul>
+      </p>
+
+      <p>Thus, when verifying whether a certain alarm should be triggered (ie to send notification to the user), the following scenarios are taken into account:
+        <ul>
+          <li>The value of the alert is <b>-1</b>, then the price of the coin must be <b>less</b> than the value of the alarm</li>
+          <li>The value of the alert is <b>1</b>, then the price of the coin must be <b>higher</b> than the value of the alarm</li>
+        </ul>
+      </p>
+
+      <p>
+        <b>Example:</b><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Alert value: $1000<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Price value: $1250<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Then the operator is: -1<br>
+        In acest caz ne putem da seama ca utilizatorul doreste sa stie cand pretul monedei este sub <b>$1000</b>.
+      </p>
+
+      <p>In terms of security, <b>Spring Security</b> is used to secure endpoints and protect them from being accessed by other domains.
+        To authenticate and authorize the user, a token is generated when the user logs into the application. This token is
+        valid for a period of 24 hours and must be included in each request made by the customer.</p>
+
+        <p>Also, the user's password is encrypted using <b>BCrypt</b> when data is entered into the database when a new user is created.</p>
+
+      <br>
+      
+      <h1>RDF Ontology</h1><hr>
+        <p>At the database level, RDF-type ontologies are used to express individuals for the base entities used by the application for optimal operation. So, we defined a series of classes, data properties and object properties.</p>
+        
+        <table>
+          <tr>
+            <td><img src="./img/classes.png" ></td>
+            <td><img src="./img/data properties.png"></td>
+            <td><img src="./img/object properties.png"></td>
+          </tr>
+        </table>  
+        
+        <p><b>Classes:</b></p>
+        <ul>
+          <li><b>User</b>: is a class that defines the basic properties of an application user. Considering that this is a person, a well-known source called FOAF (an acronym of friend of a friend) was used. Thus, User is a subclass of Foaf: Person and contains the following properties:</li>
+            <ul>
+              <li><b>foaf:firstName</b>: describe the user's first name</li>
+              <li><b>foaf:lastName</b>: describe the user's last name</li>
+              <li><b>foaf:email</b>: describe the user's email address</li>
+              <li><b>foaf:telephone</b>: describe the user's phone number</li>
+              <li><b>crys:password</b>: describe the user's password. It is a string resulted after the BCrypt hashing algorithm was applied on password provided by the user</li>
+              <li><b>crys:emailNotification</b>: it is a boolean value and is set by user to receive email alerts or not</li>
+            </ul><br>
+          <li><b>Coin</b>: is a class that defines a cryptocurrency. It is a proposed vocabulary used defined for CRYS application and contains the following properties:</li>
+            <ul>
+              <li><b>crys:name</b>: describe the name of the coin</li>
+              <li><b>crys:rank</b>: it is an integer value and describe the rank of the coin</li>
+              <li><b>crys:symbol</b>: describe the symbol of the coin (e.g. <b>BTC</b>, <b>ETH</b>, etc.)</li>
+              <li><b>crys:logoUrl</b>: contains a URL with the logo of the coin</li>
+              <li><b>crys:supply</b>: describe the available supply for trading</li>
+              <li><b>crys:maxSupply</b>: describe the total quantity of asset issued</li>
+              <li><b>crys:marketCapUsd</b>: describe the supply x price</li>
+              <li><b>crys:volumeUsd24hr</b>: describe the quantity of trading volume represented in USD over the last 24 hours</li>
+              <li><b>crys:priceUsd</b>: describe the volume-weighted price based on real-time market data, translated to USD</li>
+              <li><b>crys:changePercent24Hr</b>: describe the direction and value change in the last 24 hours</li>
+              <li><b>crys:vwap24Hr</b>: describe the Volume Weighted Average Price in the last 24 hours</li>
+            </ul><br>
+          <li><b>CoinHistory</b>: is a class that defines some historical market cap snapshots of cryptocurrencies. It has the follwing properties: </li>
+            <ul>
+              <li><b>crys:priceUsd</b>: contains the price of the coin at a certain time</li>
+              <li><b>crys:timestamp</b>: the timestamp when the coin reached the priced described before</li>
+            </ul><br>
+          <li><b>Alert</b>: is a class that defines an alert created by the user to receive email and/or application notifications when a certain coin has the price set by him. It has the following properties:</li>
+            <ul>
+              <li><b>crys:value</b>: describe the price when the alert should be triggered</li>
+              <li><b>crys:operator</b>: describes the value of the alert against the price of the currency at the time the alert is created (-1: value is lower than price, 0: value is equals with the price, 1: value is bigger than price) </li>
+            </ul>
+        </ul><br>
+
+        <p> Below we can analyze the RDF ontology defined for the CRYS application:</p>
+        <img src="./img/ontology diagram.png"/><br><br>
+
+
+      <h1>REST api</h1><hr>
 
           <p>
-            The UI communicates with the backend via HTTP for the live stream and REST for the information heavy operations, such as the coin meta-data view.<br>
+            The UI communicates with the backend via HTTPS for the live stream and REST for the information heavy operations, such as the coin meta-data view.<br>
             Such an endpoint converts the Apache Jena format into a UI friendly format, json.
           </p>
 
           <p>
             Several endoints such as this exist.<br>
-            </p><ul>
+
+            </p>
+            <ul>
               <li>
-                <b>/coins</b>
+                <b>/api/user</b>
                 <ul>
-                  <li><b>"/"</b> - retrieve info about all coins from the system</li>
-                  <li><b>"/{id}"</b> - retrieve details about a cryptocurrency by given id</li>
-                  <li><b>"/{id}/history"</b> - retrieve details about history of cryptocurrency</li>
+                  <li><span class="post">POST</span><b> "/login"</b> - retrieve user details.</li>
+                  <pre class="language-json">
+                    <code class="language-json">
+{
+  "id": "89755268-104f-11ea-8d71-362b9e155667",
+   "firstName": "Daniel",
+   "lastName": "Oana",
+   "email": "daniel.oana26@gmail.com",
+   "phone": "0756784385",
+   "email_notifications": false,
+   "token": " "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJpc3MiOiJ0b3B0YWwuY29tIiwiZXhwIjoxNDI2NDIAwLCJodHRwOi8vdG9wdGFsLmNvbS9qd3RfY2xhaW1zL2lzX2FkbWluIjp0cnVlLCJjb21wYW55IjoiVG9wdGFsIiwiYXdlc29tZSI6dHJ1ZX0.yRQYnWzskCZUxPwaQupWkiUzKELZ49eM7oWxAQK_ZXw"
+  }
+                  </code>
+                </pre>
+                <li><span class="post">POST</span><b> "/register"</b> - create a new resource that represent a user</li>
+                <li><span class="put">PUT</span><b> "/details"</b> - update user details</li>
+              </li>
+
+            </ul><br>
+              <li>
+                <b>/api/coins</b>
+                <ul>
+                  <li><span class="get">GET</span><b>"/"</b> - retrieve info about all coins from the system</li>
+                  <li><span class="get">GET</span><b>"/{id}"</b> - retrieve details about a cryptocurrency by given id</li>
+                  <pre class="language-json">
+                    <code class="language-json">
+  {
+    "id": "bitcoin",
+    "name": "Bitcoin",
+    "rank": 1,
+    "symbol": "BTC",
+    "supply": 17193925,
+    "maxSupply": 21000000,
+    "market_cap_usd": 119179791817.67401,
+    "volume_usd_24hr": 2928356777.6066666,
+    "price_usd": 36946.505855566662,
+    "change_percentage_24hr": -0.8101417214350335,
+    "vwap_24hr": "7175.0663247679233209s"
+  }
+                  </code>
+                </pre>
+                  <li><span class="get">GET</span><b>"/{id}/history"</b> - retrieve details about history of cryptocurrency</li>
+                  <pre class="language-json">
+                    <code class="language-json">
+  [
+    {
+      "id": "5732b26c-4e98-41d4-aaa8-9079cad5e2ed",
+      "coinId": "bitcoin",
+      "priceUsd": "6379.3997635993342453",
+      "time": 1530403200000
+    },
+    {
+      "id": "7eb09332-baea-4f86-8f35-45307e350bcc",
+      "coinId": "bitcoin",
+      "priceUsd": "6466.3135622762295280",
+      "time": 1530489600000
+    },
+    {
+      "id": "2f48b395-d9b0-4e47-be5e-15b9d25dd5c8",
+      "coinId": "bitcoin",
+      "priceUsd": "6601.0724971279524219",
+      "time": 1530576000000
+    }
+    ... more data
+ ]
+                  </code>
+                </pre>
                 </ul>
               </li>
-            </ul>
-          <p></p>
+            </ul><br>
 
-          <p>
-            The representation of a tweet in json format does not differ much from the one in RDF as can be seen below:
-          </p>
-          <pre class=" language-json"><code class=" language-json">
+            <ul>
+              <li>
+                <b>/api/favorite</b>
+                <ul>
+                  <li><span class="get">GET</span><b>"/{userId}}"</b> - retrieve all favorite coins for a user</li>
+                  <pre class="language-json">
+                    <code class="language-json">
 [
-	{
-	  "id": "89755268-104f-11ea-8d71-362b9e155667",
-	  "name": "Bitcoin",
-	  "rank": 1,
-	  "symbol": "BTC",
-	  "supply": 17193925,
-	  "maxSupply": 21000000,
-	  "market_cap_usd": 119179791817.67401,
-	  "volume_usd_24hr": 2928356777.6066666,
-	  "price_usd": 6931.505855566662,
-	  "change_percentage_24hr": -0.8101417214350335,
-	  "vwap_24hr": "7175.0663247679233209s"
-	},
-	{
-	  "id": "89755268-104f-11ea-8d71-362b9e155667",
-	  "name": "Ethereum",
-	  "rank": 1,
-	  "symbol": "ETH",
-	  "supply": 23582353,
-	  "maxSupply": 4232000,
-	  "market_cap_usd": 64791817.67401,
-	  "volume_usd_24hr": 4328356777.6066666,
-	  "price_usd": 431.505855566662,
-	  "change_percentage_24hr": -0.3101417214350335,
-	  "vwap_24hr": "575.0663247679233209s"
-	}
+  {
+    "id": "bitcoin",
+    "name": "Bitcoin",
+    "rank": 1,
+    "symbol": "BTC",
+    "supply": 17193925,
+    "maxSupply": 21000000,
+    "market_cap_usd": 119179791817.67401,
+    "volume_usd_24hr": 2928356777.6066666,
+    "price_usd": 36946.505855566662,
+    "change_percentage_24hr": -0.8101417214350335,
+    "vwap_24hr": "7175.0663247679233209s"
+  },
+  ...more data
 ]
-          </code></pre>
+                  </code>
+                </pre>
+                <li><span class="post">POST</span><b> "/favorite/add"</b> - create a new resource that suggest a coin is favorite for a user</li>
+                <li><span class="post">POST</span><b> "/favorite/remove"</b> - remove such a resource</li>
+              </li>
+
+            </ul><br>
+
+            <ul>
+              <li>
+                <b>/api/alert</b>
+                <ul>
+                  <li><span class="get">GET</span><b>"/{userId}}"</b> - retrieve all alerts for a user</li>
+                  <pre class="language-json">
+                    <code class="language-json">
+[
+  {
+    "id": "0d316193-62cd-452c-9fef-64c71956a15e",
+    "userId": "5732b26c-4e98-41d4-aaa8-9079cad5e2ed",
+    "coinId": "bitcoin",
+    "value": "34524.3847",
+    "operator": "-1",
+  },
+  ...more data
+]
+                  </code>
+                </pre>
+                <li><span class="get">GET</span><b>"/trigger/{userId}}"</b> - get a list of alerts that should be triggered. The result is the same as <b>/api/alert/{userId}</b></li>
+                <li><span class="post">POST</span><b> "/alert"</b> - create a new alert</li>
+                <li><span class="delete">DELETE</span><b> "/alert/remove/{id}"</b> - remove an alert</li>
+              </li>
+
+            </ul><br>
+          <p></p><br>
+
+
+
+          <h1>SPARQL Queries</h1><hr>
+          <p>The application uses a series of queries to perform SELECT, UPDATE and DELETE operations in the database. This is what SPARQL is used for, a language able to retrieve and manipulate data stored in RDF.</p>
+            <p>The APache Jena API was used to insert the data, which allows the creation of resources and their introduction in the dataset.</p>
+            <p><b>Examples:</b></p>
+            <ul>
+              <li>Insert user in database:</li>
+            </ul>
+              <pre class="language-json">
+                <code class="language-json">
+  dataset.begin(ReadWrite.WRITE);
+  Model userModel = dataset.getDefaultModel();
+              
+  Resource userResource = userModel.createResource(CRYS_URI + "user-" + user.getUuid());
+  userResource.addProperty(CRYS.type, userModel.createResource(CRYS.CRYS_URI + "User"));
+  userResource.addProperty(FOAF.firstName, user.getFirstName());
+  userResource.addProperty(FOAF.lastName, user.getLastName());
+  userResource.addProperty(FOAF.email, user.getEmail());
+  userResource.addProperty(FOAF.telephone, user.getTelephone());
+  userResource.addProperty(CRYS.password, user.getPassword());
+  userResource.addProperty(CRYS.emailNotification, user.isEmailNotification() ? "true" : "false");
+              
+  dataset.addNamedModel(USER_URI + "user-" + user.getUuid(), userModel);
+              
+  dataset.commit();
+  dataset.end();
+              </code>
+            </pre><br>
+
+            <ul>
+              <li>Retrive coin ordered ascendent by rank:</li>
+            </ul>
+              <pre class="language-json">
+                <code class="language-json sparql-text">
+PREFIX crys: <a href="<http://www.semanticweb.org/crys>"></a>
+PREFIX coin: <a href="<http://www.semanticweb.org/crys/Coin/>"></a> 
+PREFIX foaf: <a href="<http://xmlns.com/foaf/0.1#>"></a> 
+PREFIX rdf: <a href="<http://www.w3.org/1999/02/22-rdf-syntax-ns#>"></a> 
+PREFIX xsd: <a href="<http://www.w3.org/2001/XMLSchema#>"></a> 
+
+SELECT *  
+WHERE {  
+?coin rdf:type crys:Coin ; 
+      crys:id ?id ; 
+      crys:name ?name ; 
+      crys:rank ?rank ; 
+      crys:symbol ?symbol ; 
+      crys:logoUrl ?logoUrl ; 
+      crys:supply ?supply ; 
+      crys:maxSupply ?maxSupply ; 
+      crys:marketCapUsd ?marketCapUsd ; 
+      crys:volumeUsd24hr ?volumeUsd24hr ; 
+      crys:priceUsd ?priceUsd ; 
+      crys:changePercentage24hr ?changePercentage24hr ; 
+      crys:vwap24hr ?vwap24hr ; 
+ } 
+ORDER BY xsd:integer(replace(?rank, ' ', ''))
+              </code>
+            </pre><br>
+
+            <ul>
+              <li>Update coin</li>
+            </ul>
+            <pre class="language-json">
+              <code class="language-json sparql-text">
+PREFIX crys: <a href="<http://www.semanticweb.org/crys>"></a> 
+PREFIX rdf: <a href="<http://www.w3.org/1999/02/22-rdf-syntax-ns#>"> </a>
+PREFIX coin: <a href="<http://www.semanticweb.org/crys/Coin/>"></a>
+
+DELETE { 
+	?coin crys:priceUsd ?priceUsd ;  
+			crys:rank ?rank ;  
+			crys:symbol ?symbol ;  
+			crys:supply ?supply ;  
+			crys:maxSupply ?maxSupply ;  
+			crys:marketCapUsd ?marketCapUsd ;  
+			crys:volumeUsd24hr ?volumeUsd24hr ;  
+			crys:changePercentage24hr ?changePercentage24hr ;  
+			crys:vwap24hr ?vwap24hr ;  
+} 
+INSERT {  
+	?coin crys:priceUsd \%1s\ ;  
+			crys:rank \%2s\ ;  
+			crys:symbol \%3s\ ;  
+			crys:supply \%4s\ ;  
+			crys:maxSupply \%5s\ ;  
+			crys:marketCapUsd \%6s\ ;  
+			crys:volumeUsd24hr \%7s\ ;  
+			crys:changePercentage24hr \%8s\ ;  
+			crys:vwap24hr \%9s\ ;  
+} 
+WHERE 
+ { ?coin crys:id \%10s\ ; 
+			crys:priceUsd ?priceUsd ;  
+			crys:rank ?rank ;  
+			crys:symbol ?symbol ;  
+			crys:supply ?supply ;  
+			crys:maxSupply ?maxSupply ;  
+			crys:marketCapUsd ?marketCapUsd ;  
+			crys:volumeUsd24hr ?volumeUsd24hr ;  
+			crys:changePercentage24hr ?changePercentage24hr ;  
+			crys:vwap24hr ?vwap24hr ;  
+ }
+            </code>
+          </pre><br>
+
+
+<ul>
+              <li>Delete alert by user ID and coin ID</li>
+            </ul>
+              <pre class="language-json">
+                <code class="language-json sparql-text">
+PREFIX crys: <a href="<http://www.semanticweb.org/crys>"></a>
+PREFIX rdf: <a href="<http://www.w3.org/1999/02/22-rdf-syntax-ns#>"></a> 
+DELETE {   
+  ?alert rdf:type crys:Alert ;  
+        crys:value ?value ;  
+       crys:operator ?operator ;  
+       crys:belongsTo \%1s\ ;  
+       crys:forCoin \%2s\;  
+}  
+WHERE {  
+  ?alert rdf:type crys:Alert ;  
+        crys:value ?value ;  
+       crys:operator ?operator ;  
+       crys:belongsTo \%3s\ ;  
+       crys:forCoin \%4s\ ;  
+}
+              </code>
+            </pre><br>
+
+      <p>You can check more SPARQL queries on <a href="https://github.com/Daniel296/Crys/blob/main/Crys-Project/crys-api/src/main/java/com/wade/crys/utils/rdf/CrysOntologyEnum.java" target="blank">GitHub repository</a>.</p>
+
 			<br>
             <h1>References</h1><hr>
             <p><a href="https://cryptominded.com/">Cryptominded</a> - a curated directory of the best cryptocurrency resources.</p>

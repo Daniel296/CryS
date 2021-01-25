@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,9 +39,6 @@ public class UserController {
 
     @Autowired
     AuthenticationManager authenticationManager;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/email/{email}")
     public ResponseEntity getUserByEmail(@PathVariable("email") String email) {
@@ -84,21 +82,25 @@ public class UserController {
 
             userService.addUser(user);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/details/{id}")
-    public ResponseEntity getUserDetails(@PathVariable("id") String id) {
-        Optional<User> user = userService.getUserById(id);
+    @PutMapping("/update")
+    public ResponseEntity getUserDetails(@RequestBody User user) {
 
-        if(user.isPresent()) {
-            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        try {
+
+            userService.updateUser(user.getUuid(), user);
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 }

@@ -42,8 +42,7 @@ public class CoinHistoryCollectorJob implements Job {
         }
 
         List<Coin> coins = coinService.getAllCoinsOrderByRankAsc();
-//        List<Coin> coins = coinService.getAllCoinsOrderByRankAsc().stream().filter(coin -> coin.getId().equals("bitcoin")).collect(Collectors.toList());
-        for(int i = 1; i < coins.size(); i++) {
+        for(int i = 0; i < coins.size(); i++) {
 
             List<CoinHistory> coinHistory = coinHistoryCollector.getCoinsHistoryFromAPI(coins.get(i).getId());
 

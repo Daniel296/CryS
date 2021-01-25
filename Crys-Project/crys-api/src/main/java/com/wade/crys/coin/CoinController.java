@@ -21,20 +21,13 @@ public class CoinController {
 
     @GetMapping("")
     public ResponseEntity<List<Coin>> getAllCoins() {
-        List<Coin> coins;
 
-        try {
-            coins = coinService.getAllCoinsOrderByRankAsc();
-        } catch (Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(coins, HttpStatus.OK);
+        return new ResponseEntity<>(coinService.getAllCoinsOrderByRankAsc(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Coin> getCoinById(@PathVariable String id) {
+
         Optional<Coin> optional = coinService.getCoinById(id);
 
         if(optional.isPresent()) {
@@ -43,23 +36,6 @@ public class CoinController {
         }
 
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-    }
-
-    @GetMapping("/search/{term}")
-    public ResponseEntity<List<Coin>> getCoinsBySearchTerm(@PathVariable String term) {
-        return new ResponseEntity<>(coinService.getCoinsBySearchTerm(term), HttpStatus.OK);
-    }
-
-    @PostMapping("/add")
-    public ResponseEntity addCoin(@RequestBody Coin coin) {
-
-        try {
-            coinService.addCoin(coin);
-        } catch(Exception e) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity(HttpStatus.CREATED);
     }
 
 }

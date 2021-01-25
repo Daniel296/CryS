@@ -21,14 +21,14 @@ public class AlertController {
     @Autowired
     private AlertService alertService;
 
-    @GetMapping("/{user_id}")
-    public ResponseEntity<List<Alert>> getUserAlerts(@PathVariable("user_id") String userId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Alert>> getUserAlerts(@PathVariable("userId") String userId) {
 
         return new ResponseEntity<>(alertService.getUserAlerts(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/trigger/{user_id}")
-    public ResponseEntity<List<Alert>> triggerUserAlerts(@PathVariable("user_id") String userId) {
+    @GetMapping("/trigger/{userId}")
+    public ResponseEntity<List<Alert>> triggerUserAlerts(@PathVariable("userId") String userId) {
 
         return new ResponseEntity<>(alertService.getUserAlertsThatShouldBeTriggered(userId), HttpStatus.OK);
     }

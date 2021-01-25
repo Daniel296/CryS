@@ -11,11 +11,11 @@ public class CrysApplication {
     @Autowired
     private static Scheduler scheduler;
 
-    @Autowired
-    private static Scheduler coinHistoryScheduler;
-
-    @Autowired
-    private static Scheduler alertEmailScheduler;
+//    @Autowired
+//    private static Scheduler coinHistoryScheduler;
+//
+//    @Autowired
+//    private static Scheduler alertEmailScheduler;
 
     public static void main(String[] args) {
         SpringApplication.run(CrysApplication.class, args);
