@@ -14,7 +14,8 @@ pre[class*="language-"] {
 	word-spacing: normal;
 	word-break: normal;
 	word-wrap: normal;
-	line-height: 1.5;
+	line-height: 1.3;
+	font-size: 13px;
 
 	-moz-tab-size: 4;
 	-o-tab-size: 4;
@@ -24,6 +25,15 @@ pre[class*="language-"] {
 	-moz-hyphens: none;
 	-ms-hyphens: none;
 	hyphens: none;
+}
+
+pre[class*="language-"] .sparql-text {
+	color:green;
+}
+
+pre[class*="language-"] a::after {
+	content:  attr(href);
+	color: green;
 }
 
 /* Code blocks */
