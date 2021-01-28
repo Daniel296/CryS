@@ -41,14 +41,14 @@ public class CoinHistoryCollectorJob implements Job {
             e.printStackTrace();
         }
 
-        List<Coin> coins = coinService.getAllCoinsOrderByRankAsc();
-        for(int i = 0; i < coins.size(); i++) {
-
-            List<CoinHistory> coinHistory = coinHistoryCollector.getCoinsHistoryFromAPI(coins.get(i).getId());
-
-            coinHistoryService.deleteHistoryForCoin(coins.get(i).getId());
-            coinHistoryService.addCoinHistory(coinHistory);
-        }
+//        List<Coin> coins = coinService.getAllCoinsOrderByRankAsc();
+//        for(int i = 0; i < coins.size(); i++) {
+//
+//            List<CoinHistory> coinHistory = coinHistoryCollector.getCoinsHistoryFromAPI(coins.get(i).getId());
+//
+//            coinHistoryService.deleteHistoryForCoin(coins.get(i).getId());
+//            coinHistoryService.addCoinHistory(coinHistory);
+//        }
 
     }
 }

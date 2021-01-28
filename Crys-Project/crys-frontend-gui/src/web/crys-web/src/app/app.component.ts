@@ -26,12 +26,17 @@ export class AppComponent implements OnInit {
     this.createContainerForm();
     this.createMainForm();
 
-    interval(15 * 1000).subscribe( x => {
+    interval(60 * 1000).subscribe( x => {
       this.showAlerts();
     });
   }
 
   public showAlerts(): void {
+
+    if(this.authService.getUserId() === null) {
+      return;
+    }
+    // return;
 
     this.alertService.getAlertsForUser(this.authService.getUserId()).subscribe( data => {
 
@@ -41,7 +46,7 @@ export class AppComponent implements OnInit {
 
         const title = "Alert for " + alerts[i].coin.name;
         const text = alerts[i].coin.name + " price is <b>$" + alerts[i].coin.priceUsd.toFixed(2)
-          + "</b>. Go to coin <a href=\"localhost:4200/" + alerts[i].coin.id + "\" class='text-primary'>page</a>";
+          + "</b>. Go to coin <a href=\"localhost:4200/view/" + alerts[i].coin.id + "\" class='text-primary'>page</a>";
 
         this.toastForm.value.title = title;
         this.toastForm.value.text = text;

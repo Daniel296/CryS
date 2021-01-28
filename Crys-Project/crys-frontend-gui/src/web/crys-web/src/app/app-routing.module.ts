@@ -7,6 +7,7 @@ import {RegisterComponent} from "./user/register/register.component";
 import {AccountDetailsComponent} from "./user/account-details/account-details.component";
 import {AuthGuard} from './user/services/auth.guard';
 import {AccountAlertsComponent} from "./user/account-alerts/account-alerts.component";
+import {CoinOverviewComponent} from "./coin/coin-overview/coin-overview.component";
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'alerts', component: AccountAlertsComponent, canActivate: [AuthGuard] },
   { path: 'account', component: AccountDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'view/:id', component: CoinOverviewComponent },
   { path: '**', component: HomeComponent, redirectTo: '' }
 ];
 

@@ -47,16 +47,11 @@
                 <div *ngIf="detailsForm.controls.confirmPassword.errors.mustMatch">Passwords must match</div>
               </div>
             </div>
-            <span>
-              <input id="box1" type="checkbox" class="with-font">
-              <label for="box1"></label>
-            </span>
-            <p class="register-text">I certify that I am 18 years of age or older, and I agree to the User Agreement and <a href="#" color="red"> Privacy Policy.</a></p>
-            <button type="submit" name="singlebutton" class="btn btn-default btn-lg  btn-block mb10" [disabled]="!registerForm.valid">create Account</button>
+
+           <button type="submit" name="singlebutton" class="btn btn-default btn-lg  btn-block mb10" [disabled]="!registerForm.valid">Update account</button>
           </form>
         </div>
-        <p>Already have an account? <a routerLink="login" class="text-yellow"> Sign In </a> <span class="pull-right"><a routerLink="">Back to Home</a></span> </p>
-      </div>
+       </div>
       <!-- /.register-form -->
     </div>
   </div>

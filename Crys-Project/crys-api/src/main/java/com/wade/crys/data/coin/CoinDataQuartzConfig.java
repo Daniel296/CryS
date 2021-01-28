@@ -45,7 +45,7 @@ public class CoinDataQuartzConfig {
                 .withIdentity("Quartz_Coin_Data_Collector_Job")
                 .startNow()
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                        .withIntervalInSeconds(60)
+                        .withIntervalInSeconds(30)
                         .repeatForever())
                 .build();
     }

@@ -50,7 +50,7 @@ public class EmailSenderQuartzConfig {
 				.withIdentity("Quartz_Alert_Email_Sender_Job")
 				.startNow()
 				.withSchedule(SimpleScheduleBuilder.simpleSchedule()
-						.withIntervalInSeconds(300)
+						.withIntervalInSeconds(60)
 						.repeatForever())
 				.build();
 	}

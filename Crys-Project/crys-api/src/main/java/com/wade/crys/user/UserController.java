@@ -68,6 +68,8 @@ public class UserController {
                     .sign(HMAC512(SecurityConstants.JWT_SECRET.getBytes()));
             user.setToken(token);
 
+            user.setPassword(null);
+
             return new ResponseEntity<>(user, HttpStatus.OK);
 
         } catch (BadCredentialsException e) {

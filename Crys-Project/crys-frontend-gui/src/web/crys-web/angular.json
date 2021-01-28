@@ -38,7 +38,8 @@
               "src/assets/js/menumaker.min.js",
               "src/assets/js/particles.min.js",
               "src/assets/js/return-to-top.js",
-              "src/assets/js/navigation.js"
+              "src/assets/js/navigation.js",
+              "node_modules/chart.js/dist/Chart.bundle.js"
             ]
           },
           "configurations": {

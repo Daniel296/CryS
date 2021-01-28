@@ -11,9 +11,9 @@ import {FormBuilder, Validators} from "@angular/forms";
 })
 export class AccountDetailsComponent implements OnInit {
 
-  private currentUser: User;
+  public currentUser: User;
 
-  private detailsForm = this.formBuilder.group({
+  public detailsForm = this.formBuilder.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     email: ['', /*[Validators.required, Validators.email]*/],
@@ -25,7 +25,17 @@ export class AccountDetailsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private authService: AuthService) {
+
     this.authService.currentUser.subscribe(x => this.currentUser = x);
+
+    this.detailsForm.setValue({
+      firstName: this.currentUser.firstName,
+      lastName: this.currentUser.lastName,
+      email: this.currentUser.email,
+      telephone: this.currentUser.telephone,
+      password: "",
+      confirmPassword: ""
+    });
   }
 
   ngOnInit() {

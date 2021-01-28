@@ -42,13 +42,6 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> getUserByEmail(String email) {
 
-        dataset.begin(ReadWrite.READ);
-        try(QueryExecution qExec = QueryExecutionFactory.create("SELECT ?s ?p ?o WHERE { ?s ?p ?o }", dataset)) {
-            ResultSet rs = qExec.execSelect() ;
-            ResultSetFormatter.out(rs) ;
-        }
-        dataset.end();
-
         return Optional.ofNullable(getUserFromQueryResult(String.format(CrysOntologyEnum.GET_USER_BY_EMAIL_QRY.getCode(), email)));
     }
 

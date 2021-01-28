@@ -17,7 +17,7 @@
         <tbody>
           <tr *ngFor="let coin of coins">
             <th scope="row">{{ coin.rank }}</th>
-            <td><img [src]="coin.logoURL" alt="" class="coin-logo">{{ coin.name }}</td>
+            <td><img [src]="coin.logoURL" alt="" class="coin-logo"><a [routerLink]="['/view', coin.id]"> {{ coin.name }}</a></td>
             <td>{{ coin.symbol }}</td>
             <td class="price-value">${{ coin.priceUsd | number: '.2' }}</td>
             <td [ngClass]="{'negative-value': coin.changePercentage24hr < 0, 'positive-value': coin.changePercentage24hr >= 0 }"> {{ coin.changePercentage24hr.toFixed(2) }}%</td>

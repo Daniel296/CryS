@@ -17,12 +17,20 @@ export class CoinService {
 
   constructor(private http: HttpClient) { }
 
+  getCoinById(coinId: string) {
+    return this.http.get(this.baseUrl + "api/coin/" + coinId, { headers: this.headers });
+  }
+
   getAllCoins() {
     return this.http.get(this.baseUrl + "api/coin", { headers: this.headers });
   }
 
   getFavoriteCoins(user_id: string) {
     return this.http.get(this.baseUrl + "api/favorite/" + user_id, { headers: this.headers });
+  }
+
+  getCoinHistory(coinId: string) {
+    return this.http.get(this.baseUrl + "api/coin/" + coinId + "/history", { headers: this.headers });
   }
 
   addCoinToFavorite(user_id: string, coin_id: string) {
