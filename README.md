@@ -8,3 +8,5 @@ CryS aims to express and manage the knowledge about existing cryptocurrencies an
   4. User personalized alerts for coins of interest
   5. Quick view of favourite user coins
   6. Latest news regarding coins and market
+
+Check this video to see the implemented solution: https://youtu.be/4iUBIZvXq3k
